@@ -1,9 +1,11 @@
-package com.iot.api.sensor;
+package com.iot.api;
 
 import com.iot.api.Registro.Registro;
 import com.iot.api.Registro.RegistroRepository;
 import com.iot.api.area.Area;
 import com.iot.api.area.AreaRepository;
+import com.iot.api.sensor.Sensor;
+import com.iot.api.sensor.SensorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import java.sql.Timestamp;
 
 @Configuration
-public class SensorConfig {
+public class Config {
     @Autowired
     SensorRepository sensorRepository;
     @Autowired
