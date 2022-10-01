@@ -1,7 +1,7 @@
 package com.iot.api;
 
-import com.iot.api.Registro.Registro;
-import com.iot.api.Registro.RegistroRepository;
+import com.iot.api.registro.Registro;
+import com.iot.api.registro.RegistroRepository;
 import com.iot.api.area.Area;
 import com.iot.api.area.AreaRepository;
 import com.iot.api.sensor.Sensor;

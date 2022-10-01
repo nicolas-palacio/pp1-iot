@@ -1,16 +1,15 @@
-package com.iot.api.Registro;
+package com.iot.api.registro;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.iot.api.area.Area;
 import com.iot.api.sensor.Sensor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Getter
@@ -28,6 +27,7 @@ public class Registro {
 
     @JsonIgnore
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="sensor_id", nullable=false)
     private Sensor sensorR;
     private double valor;

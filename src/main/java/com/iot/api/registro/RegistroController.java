@@ -1,4 +1,4 @@
-package com.iot.api.Registro;
+package com.iot.api.registro;
 
 
 import org.springframework.stereotype.Controller;
