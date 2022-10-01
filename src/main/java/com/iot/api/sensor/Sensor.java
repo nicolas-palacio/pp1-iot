@@ -1,5 +1,6 @@
 package com.iot.api.sensor;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iot.api.Registro.Registro;
 import com.iot.api.area.Area;
 import lombok.Getter;
@@ -24,13 +25,13 @@ public class Sensor {
     private String unidadDeMedida;
     private String descripcion;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="area_id", nullable=false)
     private Area area;
 
     @OneToMany(mappedBy = "sensorR",cascade = CascadeType.ALL)
     private List<Registro> registros;
-
 
     public Sensor(String tipo,String unidadDeMedida,String descripcion,Area area){
         this.tipo=tipo;

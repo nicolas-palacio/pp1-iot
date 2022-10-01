@@ -1,5 +1,6 @@
 package com.iot.api.Registro;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iot.api.area.Area;
 import com.iot.api.sensor.Sensor;
 import lombok.Getter;
@@ -23,7 +24,9 @@ public class Registro {
     private Long id;
     private Timestamp fecha;
     private String unidad;
+    private double frecuencia; //segundos
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="sensor_id", nullable=false)
     private Sensor sensorR;
