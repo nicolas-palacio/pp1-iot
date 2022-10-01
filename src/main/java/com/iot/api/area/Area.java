@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -19,11 +21,16 @@ public class Area {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "area_sequence")
     private Long id;
+    @NotEmpty(message = "El Nombre del area no debe estar vacio")
     private String nombre;
+
+    @NotNull(message = "El Piso del area no debe estar vacio")
     private Integer piso;
+
+    @NotEmpty(message = "La Descripcion del area no debe estar vacia")
     private String descripcion;
 
-    @OneToMany(mappedBy = "area",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "area",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Sensor> sensores;
 
     public Area(String nombre,Integer piso,String descripcion){

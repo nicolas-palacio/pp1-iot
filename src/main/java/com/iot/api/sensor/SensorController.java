@@ -31,7 +31,7 @@ public class SensorController {
     @GetMapping("/ids")
     @ResponseBody
     public Optional<Sensor> getSensor(@RequestParam(name = "id")Long id ){
-        if(id.equals(null)){
+        if(id==null){
             throw new BadRequestException("id");
         }
 

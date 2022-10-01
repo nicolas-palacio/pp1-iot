@@ -31,7 +31,15 @@ public class Config {
                     "Zona abierta"
 
             );
+            Area aula1=new Area(
+                    "Aula 1",
+                    1,
+                    "Zona cerrada"
+
+            );
+
             areaRepository.save(patio);
+            areaRepository.save(aula1);
           Sensor temperatura=new Sensor(
                     "Temperatura",
                     "Celcius",
