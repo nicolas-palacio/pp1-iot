@@ -24,19 +24,21 @@ public class Registro {
     private Timestamp fecha;
     private String unidad;
     private double frecuencia; //segundos
+    private double valor;
 
     @JsonIgnore
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="sensor_id", nullable=false)
     private Sensor sensorR;
-    private double valor;
 
-    public Registro(Timestamp fecha, String unidad,double valor,Sensor sensor){
+
+    public Registro(Timestamp fecha, String unidad,double valor,Sensor sensor,double frecuencia){
         this.fecha=fecha;
         this.unidad=unidad;
         this.valor=valor;
         this.sensorR=sensor;
+        this.frecuencia=frecuencia;
     }
 
 }

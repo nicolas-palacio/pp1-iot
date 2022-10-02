@@ -16,12 +16,12 @@ import java.util.Optional;
 public interface SensorRepository extends JpaRepository<Sensor,Long> {
     @Query("SELECT s FROM Sensor s WHERE s.tipo=?1")
     Optional<List<Sensor>> findSensoresPorTipo(String tipo);
-    @Modifying
 
+    @Query("SELECT s FROM Sensor s JOIN FETCH s.registros r WHERE r.valor=1.0 AND s.tipo='Puerta'")
+    List<Sensor> findSensoresPuertaAbierta();
+
+    @Modifying
     @Query("DELETE FROM Sensor s WHERE s.tipo=?1")
     void deleteSensoresPorTipo(String tipo);
-
-   /* @Query(value = "DELETE FROM Registro r WHERE r.sensor_id=?1")
-    void deleteRegistrosPorSensorId(Long id);*/
 
 }

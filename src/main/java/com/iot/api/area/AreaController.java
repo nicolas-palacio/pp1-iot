@@ -4,6 +4,7 @@ package com.iot.api.area;
 import com.iot.api.seguridad.excepciones.BadRequestException;
 import com.iot.api.seguridad.excepciones.NotFoundException;
 import com.iot.api.sensor.Sensor;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,15 +22,17 @@ public class AreaController {
     @Autowired
     private AreaServiceImpl areaService;
 
+    @Operation(summary = "Devuelve una lista con todas las areas de la escuela.",tags = {"Areas"})
     @GetMapping
     @ResponseBody
     public List<Area> getAreas(){
         return areaService.getAreas();
     }
 
-    @GetMapping("/ids")
+    @Operation(summary = "Devuelve el area, junto con sus sensores, segun el ID indicado.",tags = {"Areas"})
+    @GetMapping("/ids/{id}")
     @ResponseBody
-    public Optional<Area> getArea(@RequestParam(name = "id")Long id){
+    public Optional<Area> getArea(@PathVariable(name = "id")Long id){
         if(id==null){
             throw new BadRequestException("id");
         }
@@ -41,6 +44,15 @@ public class AreaController {
         return area;
     }
 
+    @Operation(summary = "Devuelve una lista de las areas que tengan su puerta abierta.",tags = {"Areas"})
+    @GetMapping("/puertas-abiertas")
+    @ResponseBody
+    public List<Area> getAreaPuertasAbiertas(){
+
+        return areaService.getAreasPuertasAbiertas();
+    }
+
+    @Operation(summary = "Inserta una nueva area.",tags = {"Areas"})
     @PostMapping
     public ResponseEntity<Area> postArea(@Valid @RequestBody Area area){
         areaService.postArea(area);
@@ -48,8 +60,9 @@ public class AreaController {
         return new ResponseEntity<Area>(area, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/ids")
-    public ResponseEntity<Area> deleteArea( @RequestParam(name = "id")Long id){
+    @Operation(summary = "Elimina el area con el ID indicado.",tags = {"Areas"})
+    @DeleteMapping("/ids/{id}")
+    public ResponseEntity<Area> deleteArea( @PathVariable(name = "id")Long id){
         if(id==null){
             throw new BadRequestException("ID area.");
         }

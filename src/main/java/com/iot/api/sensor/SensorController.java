@@ -5,6 +5,7 @@ import com.iot.api.seguridad.excepciones.BadRequestException;
 import com.iot.api.seguridad.excepciones.InternalServerErrorException;
 import com.iot.api.seguridad.excepciones.NotFoundException;
 import com.iot.api.sensor.util.SensorContext;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,15 +23,17 @@ public class SensorController {
     @Autowired
     private SensorServiceImpl sensorService;
 
+    @Operation(summary = "Devuelve una lista con todos los sensores.",tags = {"Sensores"})
     @GetMapping
     @ResponseBody
     public List<Sensor> getSensores(){
         return sensorService.getTodosLosSensores();
     }
 
-    @GetMapping("/ids")
+    @Operation(summary = "Devuelve el sensor segun el ID indicado.",tags = {"Sensores"})
+    @GetMapping("/ids/{id}")
     @ResponseBody
-    public Optional<Sensor> getSensor(@RequestParam(name = "id")Long id ){
+    public Optional<Sensor> getSensor(@PathVariable(name = "id")Long id ){
         if(id==null){
             throw new BadRequestException("id");
         }
@@ -43,9 +46,10 @@ public class SensorController {
         return sensor;
     }
 
-    @GetMapping("/tipos")
+    @Operation(summary = "Devuelve una lista con todos los sensores segun el tipo.",tags = {"Sensores"})
+    @GetMapping("/tipos/{tipo}")
     @ResponseBody
-    public Optional<List<Sensor>> getSensorPorTipo(@RequestParam(name = "tipo")String tipo ){
+    public Optional<List<Sensor>> getSensorPorTipo(@PathVariable(name = "tipo")String tipo ){
         if(tipo==null){
             throw new BadRequestException("tipo");
         }
@@ -55,14 +59,15 @@ public class SensorController {
         return sensores;
     }
 
+    @Operation(summary = "Inserta un nuevo sensor.",tags = {"Sensores"})
     @PostMapping
     public ResponseEntity<Sensor> postSensor(@Valid @RequestBody SensorContext sensor){
         Sensor sensorPost=sensorService.postSensor(sensor);
         return new ResponseEntity<Sensor>(sensorPost, HttpStatus.CREATED);
     }
-
-    @DeleteMapping("/ids")
-    public ResponseEntity<Sensor> deleteSensor(@RequestParam(name = "id")Long id){
+    @Operation(summary = "Elimina el sensor con el ID indicado.",tags = {"Sensores"})
+    @DeleteMapping("/ids/{id}")
+    public ResponseEntity<Sensor> deleteSensor(@PathVariable(name = "id") Long id){
         if(id==null){
             throw new BadRequestException("ID sensor.");
         }
@@ -70,8 +75,9 @@ public class SensorController {
         return new ResponseEntity<Sensor>(sensorService.deleteSensor(id),HttpStatus.OK);
     }
 
-    @DeleteMapping("/tipos")
-    public ResponseEntity<List<Sensor>> deleteSensorPorTipo(@RequestParam(name = "tipo")String tipo){
+    @Operation(summary = "Elimina los sensores segun el tipo.",tags = {"Sensores"})
+    @DeleteMapping("/tipos/{id}")
+    public ResponseEntity<List<Sensor>> deleteSensorPorTipo(@PathVariable(name = "tipo")String tipo){
         if(tipo==null){
             throw new BadRequestException("Tipo de sensor.");
         }

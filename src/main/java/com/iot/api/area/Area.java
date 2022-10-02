@@ -30,7 +30,7 @@ public class Area {
     @NotEmpty(message = "La Descripcion del area no debe estar vacia")
     private String descripcion;
 
-    @OneToMany(mappedBy = "area",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "area",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<Sensor> sensores;
 
     public Area(String nombre,Integer piso,String descripcion){

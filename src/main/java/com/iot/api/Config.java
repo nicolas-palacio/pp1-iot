@@ -47,7 +47,14 @@ public class Config {
                     patio
 
             );
+            Sensor puerta=new Sensor(
+                    "Puerta",
+                    "Boolean",
+                    "Ubicado en el Aula 1",
+                    aula1
+            );
             sensorRepository.save(temperatura);
+            sensorRepository.save(puerta);
 
             Long datetime = System.currentTimeMillis();
             Timestamp timestamp = new Timestamp(datetime);
@@ -55,11 +62,38 @@ public class Config {
             Registro registroTemp=new Registro(
                     timestamp,
                     "Celcius",
-                    40.0,
-                    temperatura
+                    40.3,
+                    temperatura,
+                    60.0
             );
 
+            Registro registroPuerta0=new Registro(
+                    timestamp,
+                    "Boolean",
+                    1.0,
+                    puerta,
+                    30.0
+            );
+
+            Registro registroPuerta1=new Registro(
+                    timestamp,
+                    "Boolean",
+                    0.0,
+                    puerta,
+                    30.0
+            );
+
+            Registro registroPuerta=new Registro(
+                    timestamp,
+                    "Boolean",
+                    1.0,
+                    puerta,
+                    30.0
+            );
+            registroRepository.save(registroPuerta0);
+            registroRepository.save(registroPuerta1);
             registroRepository.save(registroTemp);
+            registroRepository.save(registroPuerta);
 
         };
 
