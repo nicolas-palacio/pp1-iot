@@ -23,8 +23,9 @@ public class Registro {
     private Long id;
     private Timestamp fecha;
     private String unidad;
-    private double frecuencia; //segundos
     private double valor;
+    private double frecuencia; //segundos
+
 
     @JsonIgnore
     @ManyToOne
