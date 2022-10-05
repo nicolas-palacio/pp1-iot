@@ -4,6 +4,7 @@ package com.iot.api.sensor;
 import com.iot.api.area.Area;
 import com.iot.api.area.AreaRepository;
 import com.iot.api.sensor.util.SensorContext;
+import com.iot.api.sensor.util.TipoSensor;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class SensorServiceImpl implements  SensorService{
     @Override
     public Sensor postSensor(SensorContext sensor) {
         Optional<Area> area=areaRepository.findById(sensor.getAreaId());
-        Sensor sensorPost=new Sensor(sensor.getTipo(),sensor.getUnidadDeMedida(),sensor.getDescripcion(),area.get());
+        Sensor sensorPost=new Sensor(Enum.valueOf(TipoSensor.class,sensor.getTipo().toUpperCase()),sensor.getUnidadDeMedida(),sensor.getDescripcion(),area.get());
         sensorRepository.save(sensorPost);
         return sensorPost;
     }

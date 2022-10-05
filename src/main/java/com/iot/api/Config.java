@@ -6,6 +6,7 @@ import com.iot.api.area.Area;
 import com.iot.api.area.AreaRepository;
 import com.iot.api.sensor.Sensor;
 import com.iot.api.sensor.SensorRepository;
+import com.iot.api.sensor.util.TipoSensor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -41,14 +42,14 @@ public class Config {
             areaRepository.save(patio);
             areaRepository.save(aula1);
           Sensor temperatura=new Sensor(
-                    "Temperatura",
+                  Enum.valueOf(TipoSensor.class,"TEMPERATURA"),
                     "Celcius",
                     "Ubicado en",
                     patio
 
             );
             Sensor puerta=new Sensor(
-                    "Puerta",
+                    Enum.valueOf(TipoSensor.class,"PUERTA"),
                     "Boolean",
                     "Ubicado en el Aula 1",
                     aula1

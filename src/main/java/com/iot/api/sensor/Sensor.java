@@ -3,6 +3,7 @@ package com.iot.api.sensor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iot.api.registro.Registro;
 import com.iot.api.area.Area;
+import com.iot.api.sensor.util.TipoSensor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,13 +24,14 @@ public class Sensor {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sensor_sequence")
     private Long id;
-
-    @NotNull
-    private String tipo;
     @NotNull
     private String unidadDeMedida;
     @NotNull
     private String descripcion;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TipoSensor tipo;
 
     @JsonIgnore
     @ManyToOne
@@ -39,10 +41,10 @@ public class Sensor {
     @OneToMany(mappedBy = "sensorR",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Registro> registros;
 
-    public Sensor(String tipo,String unidadDeMedida,String descripcion,Area area){
-        this.tipo=tipo;
+    public Sensor(TipoSensor tipo,String unidadDeMedida,String descripcion,Area area){
         this.unidadDeMedida=unidadDeMedida;
         this.descripcion=descripcion;
+        this.tipo=tipo;
         this.area=area;
     }
 
