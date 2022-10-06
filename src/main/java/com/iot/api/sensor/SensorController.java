@@ -1,6 +1,8 @@
 package com.iot.api.sensor;
 
 
+import com.iot.api.seguridad.JWTUtil;
+import com.iot.api.seguridad.JWTVerificador;
 import com.iot.api.seguridad.excepciones.BadRequestException;
 import com.iot.api.seguridad.excepciones.InternalServerErrorException;
 import com.iot.api.seguridad.excepciones.NotFoundException;
@@ -61,28 +63,60 @@ public class SensorController {
 
     @Operation(summary = "Inserta un nuevo sensor.",tags = {"Sensores"})
     @PostMapping
-    public ResponseEntity<Sensor> postSensor(@Valid @RequestBody SensorContext sensor){
+    public ResponseEntity<Sensor> postSensor(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody SensorContext sensor){
+        JWTVerificador.validarToken(authHeader);
+
         Sensor sensorPost=sensorService.postSensor(sensor);
         return new ResponseEntity<Sensor>(sensorPost, HttpStatus.CREATED);
     }
+    @Operation(summary = "Actualiza el estado del sensor a Habilitado,segun el ID indicado.",tags = {"Sensores"})
+    @PutMapping("/habilitar/{id}")
+    public ResponseEntity<Sensor> habilitarSensor(@RequestHeader("Authorization") String authHeader, @PathVariable(name = "id") Long id){
+        if(id==null){
+            throw new BadRequestException("ID sensor.");
+        }else if(sensorService.getSensor(id).isEmpty()){
+            throw new NotFoundException("ID sensor.");
+        }
+        JWTVerificador.validarToken(authHeader);
+        Sensor sensor=sensorService.habilitarSensor(id);
+
+        return new ResponseEntity<Sensor>(sensor,HttpStatus.OK);
+    }
+    @Operation(summary = "Actualiza el estado del sensor a Deshabilitado,segun el ID indicado.",tags = {"Sensores"})
+    @PutMapping("/deshabilitar/{id}")
+    public ResponseEntity<Sensor> deshabilitarSensor(@RequestHeader("Authorization") String authHeader, @PathVariable(name = "id") Long id){
+        if(id==null){
+            throw new BadRequestException("ID sensor.");
+        }else if(sensorService.getSensor(id).isEmpty()){
+            throw new NotFoundException("ID sensor.");
+        }
+        JWTVerificador.validarToken(authHeader);
+        Sensor sensor=sensorService.deshabilitarSensor(id);
+
+        return new ResponseEntity<Sensor>(sensor,HttpStatus.OK);
+    }
+
     @Operation(summary = "Elimina el sensor con el ID indicado.",tags = {"Sensores"})
     @DeleteMapping("/ids/{id}")
-    public ResponseEntity<Sensor> deleteSensor(@PathVariable(name = "id") Long id){
+    public ResponseEntity<Sensor> deleteSensor(@RequestHeader("Authorization") String authHeader,@PathVariable(name = "id") Long id){
         if(id==null){
             throw new BadRequestException("ID sensor.");
         }
+        JWTVerificador.validarToken(authHeader);
 
         return new ResponseEntity<Sensor>(sensorService.deleteSensor(id),HttpStatus.OK);
     }
 
     @Operation(summary = "Elimina los sensores segun el tipo.",tags = {"Sensores"})
     @DeleteMapping("/tipos/{id}")
-    public ResponseEntity<List<Sensor>> deleteSensorPorTipo(@PathVariable(name = "tipo")String tipo){
+    public ResponseEntity<List<Sensor>> deleteSensorPorTipo(@RequestHeader("Authorization") String authHeader,@PathVariable(name = "tipo")String tipo){
         if(tipo==null){
             throw new BadRequestException("Tipo de sensor.");
         }
+        JWTVerificador.validarToken(authHeader);
 
         return new ResponseEntity<List<Sensor>>(sensorService.deleteSensoresPorTipo(tipo).get(),HttpStatus.OK);
     }
+
 
 }

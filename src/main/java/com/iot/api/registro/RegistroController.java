@@ -3,6 +3,7 @@ package com.iot.api.registro;
 
 import com.iot.api.area.Area;
 import com.iot.api.registro.util.RegistroContext;
+import com.iot.api.seguridad.JWTVerificador;
 import com.iot.api.seguridad.excepciones.BadRequestException;
 import com.iot.api.seguridad.excepciones.NotFoundException;
 import com.iot.api.sensor.util.SensorContext;
@@ -48,7 +49,9 @@ public class RegistroController {
 
     @Operation(summary = "Inserta un nuevo registro.",tags = {"Registros"})
     @PostMapping
-    public ResponseEntity<Registro> postRegistro(@Valid @RequestBody RegistroContext registroContext){
+    public ResponseEntity<Registro> postRegistro(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody RegistroContext registroContext){
+        JWTVerificador.validarToken(authHeader);
+
         Registro registroPost=registroService.postRegistro(registroContext);
 
         return new ResponseEntity<Registro>(registroPost, HttpStatus.CREATED);
@@ -56,10 +59,11 @@ public class RegistroController {
 
     @Operation(summary = "Elimina el registro con el ID indicado.",tags = {"Registros"})
     @DeleteMapping("/ids/{id}")
-    public ResponseEntity<Registro> deleteRegistro( @PathVariable(name = "id")Long id){
+    public ResponseEntity<Registro> deleteRegistro(@RequestHeader("Authorization") String authHeader, @PathVariable(name = "id")Long id){
         if(id==null){
             throw new BadRequestException("ID area.");
         }
+        JWTVerificador.validarToken(authHeader);
 
         Optional<Registro> registro=registroService.getRegistro(id);
         if(registro.isEmpty()){

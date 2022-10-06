@@ -24,4 +24,15 @@ public interface SensorRepository extends JpaRepository<Sensor,Long> {
     @Query("DELETE FROM Sensor s WHERE s.tipo=?1")
     void deleteSensoresPorTipo(String tipo);
 
+
+    @Modifying
+    @Query("UPDATE Sensor s " +
+            "SET s.estado = 'DISPONIBLE' WHERE s.id = ?1")
+    int habilitarSensor(Long id);
+
+    @Modifying
+    @Query("UPDATE Sensor s " +
+            "SET s.estado = 'DESHABILITADO' WHERE s.id = ?1")
+    int deshabilitarSensor(Long id);
+
 }

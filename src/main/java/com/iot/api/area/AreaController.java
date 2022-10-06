@@ -1,6 +1,7 @@
 package com.iot.api.area;
 
 
+import com.iot.api.seguridad.JWTVerificador;
 import com.iot.api.seguridad.excepciones.BadRequestException;
 import com.iot.api.seguridad.excepciones.NotFoundException;
 import com.iot.api.sensor.Sensor;
@@ -54,7 +55,9 @@ public class AreaController {
 
     @Operation(summary = "Inserta una nueva area.",tags = {"Areas"})
     @PostMapping
-    public ResponseEntity<Area> postArea(@Valid @RequestBody Area area){
+    public ResponseEntity<Area> postArea(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody Area area){
+        JWTVerificador.validarToken(authHeader);
+
         areaService.postArea(area);
 
         return new ResponseEntity<Area>(area, HttpStatus.CREATED);
@@ -62,10 +65,11 @@ public class AreaController {
 
     @Operation(summary = "Elimina el area con el ID indicado.",tags = {"Areas"})
     @DeleteMapping("/ids/{id}")
-    public ResponseEntity<Area> deleteArea( @PathVariable(name = "id")Long id){
+    public ResponseEntity<Area> deleteArea(@RequestHeader("Authorization") String authHeader, @PathVariable(name = "id")Long id){
         if(id==null){
             throw new BadRequestException("ID area.");
         }
+        JWTVerificador.validarToken(authHeader);
 
         Optional<Area> area=areaService.getArea(id);
         if(area.isEmpty()){

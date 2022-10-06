@@ -12,6 +12,8 @@ public interface SensorService {
     Sensor postSensor(SensorContext sensor);
     Sensor deleteSensor(Long id);
     Optional<List<Sensor>> deleteSensoresPorTipo(String tipo);
+    Sensor habilitarSensor(Long id);
+    Sensor deshabilitarSensor(Long id);
 
 
 

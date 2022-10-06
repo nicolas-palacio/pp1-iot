@@ -3,6 +3,7 @@ package com.iot.api.sensor;
 
 import com.iot.api.area.Area;
 import com.iot.api.area.AreaRepository;
+import com.iot.api.sensor.util.EstadoSensor;
 import com.iot.api.sensor.util.SensorContext;
 import com.iot.api.sensor.util.TipoSensor;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class SensorServiceImpl implements  SensorService{
+public class SensorServiceImpl implements SensorService{
 
     private SensorRepository sensorRepository;
     private AreaRepository areaRepository;
@@ -37,7 +38,9 @@ public class SensorServiceImpl implements  SensorService{
     @Override
     public Sensor postSensor(SensorContext sensor) {
         Optional<Area> area=areaRepository.findById(sensor.getAreaId());
-        Sensor sensorPost=new Sensor(Enum.valueOf(TipoSensor.class,sensor.getTipo().toUpperCase()),sensor.getUnidadDeMedida(),sensor.getDescripcion(),area.get());
+        Sensor sensorPost=new Sensor(Enum.valueOf(TipoSensor.class,sensor.getTipo().toUpperCase()),
+                Enum.valueOf(EstadoSensor.class,sensor.getEstado().toUpperCase())
+                ,sensor.getUnidadDeMedida(),sensor.getDescripcion(),area.get());
         sensorRepository.save(sensorPost);
         return sensorPost;
     }
@@ -54,13 +57,21 @@ public class SensorServiceImpl implements  SensorService{
     public Optional<List<Sensor>> deleteSensoresPorTipo(String tipo) {
 
         Optional<List<Sensor>> sensores=sensorRepository.findSensoresPorTipo(tipo);
-        /*if(!sensores.isEmpty()){
-            for(Sensor sensor:sensores.get()) {
-                    System.out.println("ACAAA "+sensor.getId());
-                    sensorRepository.deleteRegistrosPorSensorId(sensor.getId());
-            }
-        }*/
         sensorRepository.deleteSensoresPorTipo(tipo);
         return sensores;
+    }
+
+    @Override
+    public Sensor habilitarSensor(Long id) {
+        sensorRepository.habilitarSensor(id);
+
+        return sensorRepository.findById(id).get();
+    }
+
+    @Override
+    public Sensor deshabilitarSensor(Long id) {
+        sensorRepository.deshabilitarSensor(id);
+
+        return sensorRepository.findById(id).get();
     }
 }

@@ -6,15 +6,22 @@ import com.iot.api.area.Area;
 import com.iot.api.area.AreaRepository;
 import com.iot.api.sensor.Sensor;
 import com.iot.api.sensor.SensorRepository;
+import com.iot.api.sensor.util.EstadoSensor;
 import com.iot.api.sensor.util.TipoSensor;
+import com.iot.api.usuario.Usuario;
+import com.iot.api.usuario.UsuarioRol;
+import com.iot.api.usuario.UsuarioServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Timestamp;
 
 @Configuration
+@AllArgsConstructor
 public class Config {
     @Autowired
     SensorRepository sensorRepository;
@@ -22,9 +29,10 @@ public class Config {
     AreaRepository areaRepository;
     @Autowired
     RegistroRepository registroRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 @Bean
-    CommandLineRunner commandLineRunnerSensor(){
+    CommandLineRunner commandLineRunnerSensor(UsuarioServiceImpl usuarioService){
         return args -> {
             Area patio=new Area(
                     "Patio",
@@ -43,6 +51,7 @@ public class Config {
             areaRepository.save(aula1);
           Sensor temperatura=new Sensor(
                   Enum.valueOf(TipoSensor.class,"TEMPERATURA"),
+                  Enum.valueOf(EstadoSensor.class,"DISPONIBLE"),
                     "Celcius",
                     "Ubicado en",
                     patio
@@ -50,6 +59,7 @@ public class Config {
             );
             Sensor puerta=new Sensor(
                     Enum.valueOf(TipoSensor.class,"PUERTA"),
+                    Enum.valueOf(EstadoSensor.class,"SOLICITADO"),
                     "Boolean",
                     "Ubicado en el Aula 1",
                     aula1
@@ -96,6 +106,12 @@ public class Config {
             registroRepository.save(registroTemp);
             registroRepository.save(registroPuerta);
 
+            //Guarda el usuario con rol de Administrador
+            String encodedPassword= bCryptPasswordEncoder.encode("secure190");
+            usuarioService.saveUser(new Usuario("Admin","adminfake@gmail.com",encodedPassword,
+                    Enum.valueOf(UsuarioRol.class,"ADMIN")));
+            usuarioService.saveUser(new Usuario("Director","directorfake@gmail.com",encodedPassword,
+                    Enum.valueOf(UsuarioRol.class,"ADMIN")));
         };
 
     }

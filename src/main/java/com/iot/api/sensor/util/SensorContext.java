@@ -17,6 +17,9 @@ public class SensorContext {
     @NotEmpty(message = "El Tipo no debe estar vacio")
     private String tipo;
 
+    @NotEmpty(message = "El Estado no debe estar vacio")
+    private String estado;
+
     @NotEmpty(message = "La Unidad de medida no debe estar vacia")
     private String unidadDeMedida;
 
