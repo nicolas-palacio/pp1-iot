@@ -27,16 +27,16 @@ public class Area {
     @NotNull(message = "El Piso del area no debe estar vacio")
     private Integer piso;
 
-    @NotEmpty(message = "La Descripcion del area no debe estar vacia")
-    private String descripcion;
+    /*@NotEmpty(message = "La Descripcion del area no debe estar vacia")
+    private String descripcion;*/
 
     @OneToMany(mappedBy = "area",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     private List<Sensor> sensores;
 
-    public Area(String nombre,Integer piso,String descripcion){
+    public Area(String nombre,Integer piso){
         this.nombre=nombre;
         this.piso=piso;
-        this.descripcion=descripcion;
+        //this.descripcion=descripcion;
     }
 
 }

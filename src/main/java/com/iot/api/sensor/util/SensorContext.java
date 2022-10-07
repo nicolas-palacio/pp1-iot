@@ -23,8 +23,8 @@ public class SensorContext {
     @NotEmpty(message = "La Unidad de medida no debe estar vacia")
     private String unidadDeMedida;
 
-    @NotEmpty(message = "La descripcion no debe estar vacia")
-    private String descripcion;
+   /* @NotEmpty(message = "La descripcion no debe estar vacia")
+    private String descripcion;*/
 
     @NotNull(message = "El ID del area no debe estar vacio")
     private Long areaId;

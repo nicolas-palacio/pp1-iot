@@ -27,8 +27,8 @@ public class Sensor {
     private Long id;
     @NotNull
     private String unidadDeMedida;
-    @NotNull
-    private String descripcion;
+    /*@NotNull
+    private String descripcion;*/
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -46,9 +46,9 @@ public class Sensor {
     @OneToMany(mappedBy = "sensorR",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Registro> registros;
 
-    public Sensor(TipoSensor tipo,EstadoSensor estado,String unidadDeMedida,String descripcion,Area area){
+    public Sensor(TipoSensor tipo,EstadoSensor estado,String unidadDeMedida,Area area){
         this.unidadDeMedida=unidadDeMedida;
-        this.descripcion=descripcion;
+        //this.descripcion=descripcion;
         this.tipo=tipo;
         this.area=area;
         this.estado=estado;

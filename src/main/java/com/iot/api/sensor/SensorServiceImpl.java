@@ -40,7 +40,7 @@ public class SensorServiceImpl implements SensorService{
         Optional<Area> area=areaRepository.findById(sensor.getAreaId());
         Sensor sensorPost=new Sensor(Enum.valueOf(TipoSensor.class,sensor.getTipo().toUpperCase()),
                 Enum.valueOf(EstadoSensor.class,sensor.getEstado().toUpperCase())
-                ,sensor.getUnidadDeMedida(),sensor.getDescripcion(),area.get());
+                ,sensor.getUnidadDeMedida(),area.get());
         sensorRepository.save(sensorPost);
         return sensorPost;
     }
