@@ -19,7 +19,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
+//import java.sql.Date;
+import java.text.ParseException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,11 +52,20 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
+        String date_string = "22-10-2024";
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date =null;
+        try {
+            date = formatter.parse(date_string);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
         User appUser=(User) authentication.getPrincipal();
         Algorithm algorithm= Algorithm.HMAC256("secret".getBytes());//save the word
         String access_token= JWT.create()
                 .withSubject(appUser.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 90 *60 * 1000))
+                .withExpiresAt(date)
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles",appUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);

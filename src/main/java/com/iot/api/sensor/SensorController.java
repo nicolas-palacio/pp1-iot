@@ -25,6 +25,8 @@ import java.util.Optional;
 public class SensorController {
     @Autowired
     private SensorServiceImpl sensorService;
+    @Autowired
+    private JWTVerificador jwtVerificador;
 
     @Operation(summary = "Devuelve una lista con todos los sensores.",tags = {"Sensores"})
     @GetMapping
@@ -66,7 +68,7 @@ public class SensorController {
     @Operation(summary = "Inserta un nuevo sensor.",tags = {"Sensores"},security = {@SecurityRequirement(name="BearerJWT")})
     @PostMapping
     public ResponseEntity<Sensor> postSensor(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody SensorContext sensor){
-        JWTVerificador.validarToken(authHeader);
+        jwtVerificador.validarToken(authHeader);
 
         Sensor sensorPost=sensorService.postSensor(sensor);
         return new ResponseEntity<Sensor>(sensorPost, HttpStatus.CREATED);
@@ -79,7 +81,7 @@ public class SensorController {
         }else if(sensorService.getSensor(id).isEmpty()){
             throw new NotFoundException("ID sensor.");
         }
-        JWTVerificador.validarToken(authHeader);
+        jwtVerificador.validarToken(authHeader);
         Sensor sensor=sensorService.habilitarSensor(id);
 
         return new ResponseEntity<Sensor>(sensor,HttpStatus.OK);
@@ -92,7 +94,7 @@ public class SensorController {
         }else if(sensorService.getSensor(id).isEmpty()){
             throw new NotFoundException("ID sensor.");
         }
-        JWTVerificador.validarToken(authHeader);
+        jwtVerificador.validarToken(authHeader);
         Sensor sensor=sensorService.deshabilitarSensor(id);
 
         return new ResponseEntity<Sensor>(sensor,HttpStatus.OK);
@@ -104,7 +106,7 @@ public class SensorController {
         if(id==null){
             throw new BadRequestException("ID sensor.");
         }
-        JWTVerificador.validarToken(authHeader);
+        jwtVerificador.validarToken(authHeader);
 
         return new ResponseEntity<Sensor>(sensorService.deleteSensor(id),HttpStatus.OK);
     }
@@ -115,7 +117,7 @@ public class SensorController {
         if(tipo==null){
             throw new BadRequestException("Tipo de sensor.");
         }
-        JWTVerificador.validarToken(authHeader);
+        jwtVerificador.validarToken(authHeader);
 
         return new ResponseEntity<List<Sensor>>(sensorService.deleteSensoresPorTipo(tipo).get(),HttpStatus.OK);
     }

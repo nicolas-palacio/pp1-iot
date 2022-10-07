@@ -23,6 +23,8 @@ import java.util.Optional;
 public class AreaController {
     @Autowired
     private AreaServiceImpl areaService;
+    @Autowired
+    private JWTVerificador jwtVerificador;
 
     @Operation(summary = "Devuelve una lista con todas las areas de la escuela.",tags = {"Areas"})
     @GetMapping
@@ -57,7 +59,7 @@ public class AreaController {
     @Operation(summary = "Inserta una nueva area.",tags = {"Areas"},security = {@SecurityRequirement(name="BearerJWT")})
     @PostMapping
     public ResponseEntity<Area> postArea(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody Area area){
-        JWTVerificador.validarToken(authHeader);
+        jwtVerificador.validarToken(authHeader);
 
         areaService.postArea(area);
 
@@ -70,7 +72,7 @@ public class AreaController {
         if(id==null){
             throw new BadRequestException("ID area.");
         }
-        JWTVerificador.validarToken(authHeader);
+        jwtVerificador.validarToken(authHeader);
 
         Optional<Area> area=areaService.getArea(id);
         if(area.isEmpty()){

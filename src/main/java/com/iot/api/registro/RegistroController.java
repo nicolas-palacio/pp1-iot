@@ -26,6 +26,8 @@ import java.util.Optional;
 public class RegistroController {
     @Autowired
     private RegistroService registroService;
+    @Autowired
+    private JWTVerificador jwtVerificador;
 
     @Operation(summary = "Devuelve una lista con todos los registros de los sensores.",tags = {"Registros"})
     @GetMapping
@@ -51,7 +53,7 @@ public class RegistroController {
     @Operation(summary = "Inserta un nuevo registro.",tags = {"Registros"},security = {@SecurityRequirement(name="BearerJWT")})
     @PostMapping
     public ResponseEntity<Registro> postRegistro(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody RegistroContext registroContext){
-        JWTVerificador.validarToken(authHeader);
+        jwtVerificador.validarToken(authHeader);
 
         Registro registroPost=registroService.postRegistro(registroContext);
 
@@ -64,7 +66,7 @@ public class RegistroController {
         if(id==null){
             throw new BadRequestException("ID area.");
         }
-        JWTVerificador.validarToken(authHeader);
+        jwtVerificador.validarToken(authHeader);
 
         Optional<Registro> registro=registroService.getRegistro(id);
         if(registro.isEmpty()){
