@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iot.api.seguridad.JWTUtil;
 import com.iot.api.usuario.tokenExpired.TokenExpiredServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,7 @@ public class UsuarioResource {
         return ResponseEntity.ok(appUserServiceImpl.getUsers());
 
     }*/
-    @Operation(summary = "Devuelve la informacion del usuario.",tags = {"Usuarios"})
+    @Operation(summary = "Devuelve la informacion del usuario.",tags = {"Usuarios"},security = {@SecurityRequirement(name="BearerJWT")})
     @GetMapping("/user/info")
     public Object getDataUsuario(@RequestHeader("Authorization") String authHeader){
         Usuario usuario=null;
@@ -72,7 +73,7 @@ public class UsuarioResource {
       appUserServiceImpl.addRoleToUser(form.getUsername(),form.getRolename());
       return ResponseEntity.ok().build();
     }*/
-    @Operation(summary = "Guarda un nuevo usuario.",tags = {"Usuarios"})
+    @Operation(summary = "Guarda un nuevo usuario.",tags = {"Usuarios"},security = {@SecurityRequirement(name="BearerJWT")})
     @PostMapping
     public ResponseEntity<Usuario> saveUser(@RequestHeader("Authorization") String authHeader,@RequestBody Usuario usuario){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());

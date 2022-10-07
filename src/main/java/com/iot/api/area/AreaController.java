@@ -6,6 +6,7 @@ import com.iot.api.seguridad.excepciones.BadRequestException;
 import com.iot.api.seguridad.excepciones.NotFoundException;
 import com.iot.api.sensor.Sensor;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,7 +54,7 @@ public class AreaController {
         return areaService.getAreasPuertasAbiertas();
     }
 
-    @Operation(summary = "Inserta una nueva area.",tags = {"Areas"})
+    @Operation(summary = "Inserta una nueva area.",tags = {"Areas"},security = {@SecurityRequirement(name="BearerJWT")})
     @PostMapping
     public ResponseEntity<Area> postArea(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody Area area){
         JWTVerificador.validarToken(authHeader);
@@ -63,7 +64,7 @@ public class AreaController {
         return new ResponseEntity<Area>(area, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Elimina el area con el ID indicado.",tags = {"Areas"})
+    @Operation(summary = "Elimina el area con el ID indicado.",tags = {"Areas"},security = {@SecurityRequirement(name="BearerJWT")})
     @DeleteMapping("/ids/{id}")
     public ResponseEntity<Area> deleteArea(@RequestHeader("Authorization") String authHeader, @PathVariable(name = "id")Long id){
         if(id==null){

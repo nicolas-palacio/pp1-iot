@@ -8,6 +8,7 @@ import com.iot.api.seguridad.excepciones.BadRequestException;
 import com.iot.api.seguridad.excepciones.NotFoundException;
 import com.iot.api.sensor.util.SensorContext;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,7 @@ public class RegistroController {
         return registro;
     }
 
-    @Operation(summary = "Inserta un nuevo registro.",tags = {"Registros"})
+    @Operation(summary = "Inserta un nuevo registro.",tags = {"Registros"},security = {@SecurityRequirement(name="BearerJWT")})
     @PostMapping
     public ResponseEntity<Registro> postRegistro(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody RegistroContext registroContext){
         JWTVerificador.validarToken(authHeader);
@@ -57,7 +58,7 @@ public class RegistroController {
         return new ResponseEntity<Registro>(registroPost, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Elimina el registro con el ID indicado.",tags = {"Registros"})
+    @Operation(summary = "Elimina el registro con el ID indicado.",tags = {"Registros"},security = {@SecurityRequirement(name="BearerJWT")})
     @DeleteMapping("/ids/{id}")
     public ResponseEntity<Registro> deleteRegistro(@RequestHeader("Authorization") String authHeader, @PathVariable(name = "id")Long id){
         if(id==null){
