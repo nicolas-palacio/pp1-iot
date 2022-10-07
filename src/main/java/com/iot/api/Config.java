@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Configuration
 @AllArgsConstructor
@@ -67,8 +68,8 @@ public class Config {
             sensorRepository.save(temperatura);
             sensorRepository.save(puerta);
 
-            Long datetime = System.currentTimeMillis();
-            Timestamp timestamp = new Timestamp(datetime);
+            LocalDateTime now=LocalDateTime.now();
+            Timestamp timestamp = Timestamp.valueOf(now);
 
             Registro registroTemp=new Registro(
                     timestamp,

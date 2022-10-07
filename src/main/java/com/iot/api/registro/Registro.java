@@ -1,5 +1,6 @@
 package com.iot.api.registro;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iot.api.sensor.Sensor;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class Registro {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "registro_sequence")
     private Long id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private Timestamp fecha;
     private String unidad;
     private double valor;
