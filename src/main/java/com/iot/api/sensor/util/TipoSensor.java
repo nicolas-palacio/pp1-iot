@@ -5,5 +5,8 @@ public enum TipoSensor {
     PUERTA,
     HUMEDAD,
     CALIDAD_DE_AIRE,
-    PROXIMIDAD
+    PROXIMIDAD,
+    HUMO,
+    GAS,
+    NIVEL_DE_RUIDO
 }
