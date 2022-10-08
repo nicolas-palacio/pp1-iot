@@ -27,7 +27,7 @@ public class SensorServiceImpl implements SensorService{
 
     @Override
     public Optional<List<Sensor>> getSensoresPorTipo(String tipo) {
-        return sensorRepository.findSensoresPorTipo(tipo);
+        return sensorRepository.findSensoresPorTipo(TipoSensor.valueOf(tipo.toUpperCase()));
     }
 
     @Override
@@ -56,8 +56,8 @@ public class SensorServiceImpl implements SensorService{
     @Override
     public Optional<List<Sensor>> deleteSensoresPorTipo(String tipo) {
 
-        Optional<List<Sensor>> sensores=sensorRepository.findSensoresPorTipo(tipo);
-        sensorRepository.deleteSensoresPorTipo(tipo);
+        Optional<List<Sensor>> sensores=sensorRepository.findSensoresPorTipo(TipoSensor.valueOf(tipo.toUpperCase()));
+        sensorRepository.deleteSensoresPorTipo(TipoSensor.valueOf(tipo.toUpperCase()));
         return sensores;
     }
 
