@@ -1,5 +1,6 @@
 package com.iot.api.registro.util;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 public class RegistroContext {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     @NotNull(message = "La Fecha no debe estar vacia")
     private Timestamp fecha;
 
