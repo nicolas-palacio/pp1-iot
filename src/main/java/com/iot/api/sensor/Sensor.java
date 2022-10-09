@@ -54,5 +54,15 @@ public class Sensor {
         this.estado=estado;
     }
 
-
+    @Override
+    public String toString() {
+        return "Sensor{" +
+                "id=" + id +
+                ", unidadDeMedida='" + unidadDeMedida + '\'' +
+                ", tipo=" + tipo +
+                ", estado=" + estado +
+                ", area=" + area +
+                ", registros=" + registros +
+                '}';
+    }
 }

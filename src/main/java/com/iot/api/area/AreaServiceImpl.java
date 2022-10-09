@@ -40,26 +40,31 @@ public class AreaServiceImpl implements AreaService{
     public List<Area> getAreasPuertasAbiertas() {
         List<Area> areas=areaRepository.getAreasPuertas();
         List<Sensor> sensores=getUltimoRegistro(sensorRepository.findSensoresPuertaAbierta());
+        List<Area> areasReturn=new ArrayList<>();
 
-        for(Area area:areas){
-            for(Sensor sensor:area.getSensores()){
+        for(int i=0;i<areas.size();i++){
+            Area area=areas.get(i);
+            for(int k=0;k<area.getSensores().size();k++){
+                Sensor sensor=area.getSensores().get(k);
                 if(!sensores.contains(sensor)){
                     area.getSensores().remove(sensor);
+                }else{
+                    areasReturn.add(area);
                 }
             }
         }
 
-        return areas;
+        return areasReturn;
     }
 
     private List<Sensor> getUltimoRegistro(List<Sensor>sensores){
         List<Sensor> sensoresConUltimoRegistro=sensores;
 
-        for(Sensor sensor:sensoresConUltimoRegistro){
-            if(sensor.getRegistros().size()>1){
-                Registro ultimoRegistro=sensor.getRegistros().get(sensor.getRegistros().size()-1);
-                sensor.getRegistros().clear();
-                sensor.setRegistros(List.of(ultimoRegistro));
+        for(int i=0;i<=sensoresConUltimoRegistro.size()-1;i++){
+            if(sensoresConUltimoRegistro.get(i).getRegistros().size()>1){
+                Registro ultimoRegistro=sensoresConUltimoRegistro.get(i).getRegistros().get(sensoresConUltimoRegistro.get(i).getRegistros().size()-1);
+                sensoresConUltimoRegistro.get(i).getRegistros().clear();
+                sensoresConUltimoRegistro.get(i).setRegistros(List.of(ultimoRegistro));
             }
         }
 

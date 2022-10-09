@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface AreaRepository extends JpaRepository<Area,Long> {
-    @Query("SELECT a FROM Area a JOIN FETCH a.sensores s WHERE s.tipo='Puerta'")
+    @Query("SELECT a FROM Area a JOIN FETCH a.sensores s WHERE s.tipo='PUERTA'")
    List<Area> getAreasPuertas();
 
 }

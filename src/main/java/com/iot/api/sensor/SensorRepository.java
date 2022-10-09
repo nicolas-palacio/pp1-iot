@@ -18,7 +18,7 @@ public interface SensorRepository extends JpaRepository<Sensor,Long> {
     @Query("SELECT s FROM Sensor s WHERE s.tipo= ?1")
     Optional<List<Sensor>> findSensoresPorTipo( TipoSensor tipo);
 
-    @Query("SELECT s FROM Sensor s JOIN FETCH s.registros r WHERE r.valor=1.0 AND s.tipo='Puerta'")
+    @Query("SELECT s FROM Sensor s JOIN FETCH s.registros r WHERE r.valor=1.0 AND s.tipo='PUERTA'")
     List<Sensor> findSensoresPuertaAbierta();
 
     @Modifying
