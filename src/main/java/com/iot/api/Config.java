@@ -133,7 +133,6 @@ public class Config {
             Area aulaVirtual=new Area("Aula virtual "+i,i);
 
             areaRepository.save(aulaVirtual);
-
         }
 
         //Baños Planta Baja
@@ -146,7 +145,6 @@ public class Config {
         for(int i=7;i<=9;i++){
             Area baño=new Area("Baño "+i,1);
             areaRepository.save(baño);
-
         }
 
         //Baños Segunda Planta
@@ -185,7 +183,7 @@ public class Config {
                         Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Porcentaje", area);
                 Sensor humo = new Sensor(
                         Enum.valueOf(TipoSensor.class, "HUMO"),
-                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "UHumo", area);
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "ppm", area);
                 Sensor temperatura = new Sensor(
                         Enum.valueOf(TipoSensor.class, "TEMPERATURA"),
                         Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Celcius", area);
@@ -194,7 +192,7 @@ public class Config {
                         Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Decibeles", area);
                 Sensor calidadDeAire = new Sensor(
                         Enum.valueOf(TipoSensor.class, "CALIDAD_DE_AIRE"),
-                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "UCalidad", area);
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "ppm", area);
                 Sensor puerta = new Sensor(
                         Enum.valueOf(TipoSensor.class, "PUERTA"),
                         Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Boolean", area);
@@ -236,10 +234,7 @@ public class Config {
                             puerta,
                             30.0
                     );
-                    registroRepository.save(registroPuerta0);
-                    registroRepository.save(registroPuerta1);
-                    registroRepository.save(registroTemp);
-                    registroRepository.save(registroPuerta);
+                    registroRepository.saveAll(List.of(registroPuerta0,registroPuerta1,registroTemp,registroPuerta));
                 }
 
             }else if(area.getNombre().contains("Patio")){
@@ -248,15 +243,15 @@ public class Config {
                         Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Celcius", area);
                 Sensor calidadDeAirePatio = new Sensor(
                         Enum.valueOf(TipoSensor.class, "CALIDAD_DE_AIRE"),
-                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "UCalidad", area);
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "ppm", area);
                 sensorRepository.saveAll(List.of(temperaturaPatio,calidadDeAirePatio));
             }else if(area.getNombre().contains("Gym")){
                 Sensor calidadDeAireGym = new Sensor(
                         Enum.valueOf(TipoSensor.class, "CALIDAD_DE_AIRE"),
-                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "UCalidad", area);
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "ppm", area);
                 Sensor humoGym = new Sensor(
                         Enum.valueOf(TipoSensor.class, "HUMO"),
-                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "UHumo", area);
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "ppm", area);
                 Sensor puertaGym = new Sensor(
                         Enum.valueOf(TipoSensor.class, "PUERTA"),
                         Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Boolean", area);
@@ -267,16 +262,16 @@ public class Config {
                         Enum.valueOf(EstadoSensor.class,"DISPONIBLE"), "Porcentaje", area);
                 Sensor humoLabo = new Sensor(
                         Enum.valueOf(TipoSensor.class, "HUMO"),
-                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "UHumo", area);
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "ppm", area);
                 Sensor gasLabo = new Sensor(
                         Enum.valueOf(TipoSensor.class, "GAS"),
-                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "UGas", area);
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "ppm", area);
                 Sensor temperaturaLabo=new Sensor(
                         Enum.valueOf(TipoSensor.class,"TEMPERATURA"),
                         Enum.valueOf(EstadoSensor.class,"DISPONIBLE"), "Celcius", area);
                 Sensor calidadDeAireLabo=new Sensor(
                         Enum.valueOf(TipoSensor.class,"CALIDAD_DE_AIRE"),
-                        Enum.valueOf(EstadoSensor.class,"DISPONIBLE"), "UCalidad", area);
+                        Enum.valueOf(EstadoSensor.class,"DISPONIBLE"), "ppm", area);
                 Sensor puertaLabo=new Sensor(
                         Enum.valueOf(TipoSensor.class,"PUERTA"),
                         Enum.valueOf(EstadoSensor.class,"DISPONIBLE"), "Boolean", area);
@@ -287,13 +282,13 @@ public class Config {
                         Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Porcentaje", area);
                 Sensor humo = new Sensor(
                         Enum.valueOf(TipoSensor.class, "HUMO"),
-                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "UHumo", area);
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "ppm", area);
                 Sensor temperatura = new Sensor(
                         Enum.valueOf(TipoSensor.class, "TEMPERATURA"),
                         Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Celcius", area);
                 Sensor calidadDeAire = new Sensor(
                         Enum.valueOf(TipoSensor.class, "CALIDAD_DE_AIRE"),
-                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "UCalidad", area);
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "ppm", area);
                 Sensor puerta = new Sensor(
                         Enum.valueOf(TipoSensor.class, "PUERTA"),
                         Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Boolean", area);
@@ -301,7 +296,7 @@ public class Config {
             } else if (area.getNombre().contains("Baño")) {
                 Sensor humoBaño = new Sensor(
                         Enum.valueOf(TipoSensor.class, "HUMO"),
-                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "UHumo", area);
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "ppm", area);
                 Sensor puertaBaño = new Sensor(
                         Enum.valueOf(TipoSensor.class, "PUERTA"),
                         Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Boolean", area);
@@ -309,16 +304,15 @@ public class Config {
             }else if(area.getNombre().contains("Cocina") || area.getNombre().contains("Comedor") ){
                 Sensor humo = new Sensor(
                         Enum.valueOf(TipoSensor.class, "HUMO"),
-                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "UHumo", area);
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "ppm", area);
                 Sensor gas = new Sensor(
                         Enum.valueOf(TipoSensor.class, "GAS"),
-                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "UGas", area);
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "ppm", area);
                 Sensor puerta = new Sensor(
                         Enum.valueOf(TipoSensor.class, "PUERTA"),
                         Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Boolean", area);
                 sensorRepository.saveAll(List.of(humo,gas,puerta));
             }
-
         }
 
     }
