@@ -3,10 +3,12 @@ package com.iot.api.sensor;
 
 import com.iot.api.area.Area;
 import com.iot.api.area.AreaRepository;
+import com.iot.api.email.EmailSenderService;
 import com.iot.api.sensor.util.EstadoSensor;
 import com.iot.api.sensor.util.SensorContext;
 import com.iot.api.sensor.util.TipoSensor;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +20,9 @@ public class SensorServiceImpl implements SensorService{
 
     private SensorRepository sensorRepository;
     private AreaRepository areaRepository;
+
+    @Autowired
+    private EmailSenderService emailSenderService;
 
 
     @Override
@@ -42,6 +47,7 @@ public class SensorServiceImpl implements SensorService{
                 Enum.valueOf(EstadoSensor.class,sensor.getEstado().toUpperCase())
                 ,sensor.getUnidadDeMedida(),area.get());
         sensorRepository.save(sensorPost);
+
         return sensorPost;
     }
 
