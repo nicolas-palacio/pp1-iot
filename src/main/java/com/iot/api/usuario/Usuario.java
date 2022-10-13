@@ -1,6 +1,7 @@
 package com.iot.api.usuario;
 
 
+import com.iot.api.ticket.Ticket;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,6 +30,14 @@ public class Usuario {
 
     @Enumerated(EnumType.STRING)
     private UsuarioRol usuarioRol;
+
+    @ManyToMany
+    @JoinTable(
+            name = "solicitudes_usuario",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "ticket_id"))
+    List<Ticket> solicitudes;
+
 
     public Usuario(String nombre, String email, String password, UsuarioRol usuarioRol) {
         this.nombre = nombre;

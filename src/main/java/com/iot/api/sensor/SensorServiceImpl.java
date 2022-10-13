@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,12 +42,14 @@ public class SensorServiceImpl implements SensorService{
     }
 
     @Override
-    public Sensor postSensor(SensorContext sensor) {
+    public Sensor postSensor(SensorContext sensor) throws MessagingException {
         Optional<Area> area=areaRepository.findById(sensor.getAreaId());
         Sensor sensorPost=new Sensor(Enum.valueOf(TipoSensor.class,sensor.getTipo().toUpperCase()),
                 Enum.valueOf(EstadoSensor.class,sensor.getEstado().toUpperCase())
                 ,sensor.getUnidadDeMedida(),area.get());
         sensorRepository.save(sensorPost);
+
+        emailSenderService.enviarEmail(sensor.getTipo().toString(),"Aula 1");
 
         return sensorPost;
     }

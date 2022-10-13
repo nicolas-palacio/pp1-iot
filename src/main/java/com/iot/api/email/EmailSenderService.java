@@ -1,22 +1,42 @@
 package com.iot.api.email;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Service;
+import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
+
 @Service
+@AllArgsConstructor
 public class EmailSenderService {
-    @Autowired
-    private JavaMailSender mailSender;
 
-    public void enviarEmail(String tipo,String area){
-        SimpleMailMessage mensaje=new SimpleMailMessage();
-        mensaje.setFrom("nico.p22013@gmail.com");
-        mensaje.setTo("nicolaspalacio986@gmail.com");
-        mensaje.setText("test");
-        mensaje.setSubject("Solicitud de alta de sensor");
+    private final JavaMailSender mailSender;
 
-        mailSender.send(mensaje);
+
+
+    @Async
+    public void enviarEmail(String tipo,String area) throws MessagingException {
+        try{
+
+            MimeMessage mimeMessage= mailSender.createMimeMessage();
+            MimeMessageHelper helper= new MimeMessageHelper(mimeMessage,"utf-8");
+            helper.setText(buildEmail(tipo,area),true);
+            helper.setFrom("nico.p22013@gmail.com");
+            helper.setTo("nicolaspalacio986@gmail.com");
+            helper.setSubject("Solicitud de alta de sensor");
+
+            mailSender.send(mimeMessage);
+
+        }catch (MessagingException e){
+            LOGGER.error("failed to send email",e);
+            throw new IllegalStateException("failed to send email");
+        }
+
 
     }
 
@@ -138,7 +158,7 @@ public class EmailSenderService {
                 "          <tr>\n" +
                 "            <td align=\"center\" valign=\"top\" style=\"padding: 36px 24px;\">\n" +
                 "              <a href=\"https://www.blogdesire.com\" target=\"_blank\" style=\"display: inline-block;\">\n" +
-                "                <img src=\"https://www.blogdesire.com/wp-content/uploads/2019/07/blogdesire-1.png\" alt=\"Logo\" border=\"0\" width=\"48\" style=\"display: block; width: 48px; max-width: 48px; min-width: 48px;\">\n" +
+                "                <img src=\"https://cdn-icons-png.flaticon.com/512/6119/6119533.png\" alt=\"Logo\" border=\"0\" width=\"48\" style=\"display: block; width: 48px; max-width: 48px; min-width: 48px;\">\n" +
                 "              </a>\n" +
                 "            </td>\n" +
                 "          </tr>\n" +
@@ -163,7 +183,7 @@ public class EmailSenderService {
                 "        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"max-width: 600px;\">\n" +
                 "          <tr>\n" +
                 "            <td align=\"left\" bgcolor=\"#ffffff\" style=\"padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;\">\n" +
-                "              <h1 style=\"margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;\">Confirm Your Email Address</h1>\n" +
+                "              <h1 style=\"margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;\">Solicitud de alta de sensor</h1>\n" +
                 "            </td>\n" +
                 "          </tr>\n" +
                 "        </table>\n" +
@@ -189,15 +209,14 @@ public class EmailSenderService {
                 "          <!-- start copy -->\n" +
                 "          <tr>\n" +
                 "            <td align=\"left\" bgcolor=\"#ffffff\" style=\"padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\">\n" +
-                "              <p style=\"margin: 0;\">Se ha realizado una solicitud para dar de alta un sensor del tipo "+tipo+" para el area "+area+".</p>\n" +
+                "              <p style=\"margin: 0;\">Se ha realizado una solicitud para dar de alta un sensor del tipo <i>"+tipo+"</i> para <strong>"+area+"</strong>.\n" +
                 "            </td>\n" +
                 "          </tr>\n" +
                 "          <!-- end copy -->\n" +
                 "          <!-- start copy -->\n" +
                 "          <tr>\n" +
                 "            <td align=\"left\" bgcolor=\"#ffffff\" style=\"padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\">\n" +
-                "              <p style=\"margin: 0;\">If that doesn't work, copy and paste the following link in your browser:</p>\n" +
-                "              <p style=\"margin: 0;\"><a href=\"https://blogdesire.com\" target=\"_blank\">https://blogdesire.com/xxx-xxx-xxxx</a></p>\n" +
+
                 "            </td>\n" +
                 "          </tr>\n" +
                 "          <!-- end copy -->\n" +
@@ -205,7 +224,7 @@ public class EmailSenderService {
                 "          <!-- start copy -->\n" +
                 "          <tr>\n" +
                 "            <td align=\"left\" bgcolor=\"#ffffff\" style=\"padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-bottom: 3px solid #d4dadf\">\n" +
-                "              <p style=\"margin: 0;\">Cheers,<br> Paste</p>\n" +
+                "              <p style=\"margin: 0;\">¡Saludos!</p>\n" +
                 "            </td>\n" +
                 "          </tr>\n" +
                 "          <!-- end copy -->\n" +
@@ -220,43 +239,7 @@ public class EmailSenderService {
                 "    </tr>\n" +
                 "    <!-- end copy block -->\n" +
                 "\n" +
-                "    <!-- start footer -->\n" +
-                "    <tr>\n" +
-                "      <td align=\"center\" bgcolor=\"#e9ecef\" style=\"padding: 24px;\">\n" +
-                "        <!--[if (gte mso 9)|(IE)]>\n" +
-                "        <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"600\">\n" +
-                "        <tr>\n" +
-                "        <td align=\"center\" valign=\"top\" width=\"600\">\n" +
-                "        <![endif]-->\n" +
-                "        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"max-width: 600px;\">\n" +
-                "\n" +
-                "          <!-- start permission -->\n" +
-                "          <tr>\n" +
-                "            <td align=\"center\" bgcolor=\"#e9ecef\" style=\"padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;\">\n" +
-                "              <p style=\"margin: 0;\">You received this email because we received a request for [type_of_action] for your account. If you didn't request [type_of_action] you can safely delete this email.</p>\n" +
-                "            </td>\n" +
-                "          </tr>\n" +
-                "          <!-- end permission -->\n" +
-                "\n" +
-                "          <!-- start unsubscribe -->\n" +
-                "          <tr>\n" +
-                "            <td align=\"center\" bgcolor=\"#e9ecef\" style=\"padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;\">\n" +
-                "              <p style=\"margin: 0;\">To stop receiving these emails, you can <a href=\"https://www.blogdesire.com\" target=\"_blank\">unsubscribe</a> at any time.</p>\n" +
-                "              <p style=\"margin: 0;\">Paste 1234 S. Broadway St. City, State 12345</p>\n" +
-                "            </td>\n" +
-                "          </tr>\n" +
-                "          <!-- end unsubscribe -->\n" +
-                "\n" +
-                "        </table>\n" +
-                "        <!--[if (gte mso 9)|(IE)]>\n" +
-                "        </td>\n" +
-                "        </tr>\n" +
-                "        </table>\n" +
-                "        <![endif]-->\n" +
-                "      </td>\n" +
-                "    </tr>\n" +
-                "    <!-- end footer -->\n" +
-                "\n" +
+
                 "  </table>\n" +
                 "  <!-- end body -->\n" +
                 "\n" +

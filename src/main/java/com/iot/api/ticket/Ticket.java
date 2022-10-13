@@ -7,6 +7,7 @@ import com.iot.api.sensor.util.EstadoSensor;
 import com.iot.api.sensor.util.TipoSensor;
 import com.iot.api.ticket.util.EstadoTicket;
 import com.iot.api.ticket.util.TipoTicket;
+import com.iot.api.usuario.Usuario;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Getter
@@ -42,6 +44,9 @@ public class Ticket {
 
     @NotNull
     private String descripcion;
+
+    @ManyToMany(mappedBy = "solicitudes")
+    List<Usuario> usuarioList;
 
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
