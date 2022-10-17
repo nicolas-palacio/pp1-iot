@@ -45,6 +45,8 @@ public class Ticket {
     @NotNull(message = "La descripcion no puede estar vacia.")
     private String descripcion;
 
+    private Long idSensor;
+
     @ManyToMany(mappedBy = "solicitudes")
     List<Usuario> usuarioList;
 

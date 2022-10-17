@@ -28,7 +28,7 @@ public class EmailSenderService {
             helper.setText(buildEmail(tipoSensor,idSensor,area,idArea,tipoSolicitud),true);
             helper.setFrom("nico.p22013@gmail.com");
             helper.setTo("nicolaspalacio986@gmail.com");
-            helper.setSubject("Solicitud de alta de sensor");
+            helper.setSubject("Solicitud de "+tipoSolicitud.replace('_',' ').toLowerCase());
 
             mailSender.send(mimeMessage);
 
@@ -212,7 +212,7 @@ public class EmailSenderService {
                 "          <!-- start copy -->\n" +
                 "          <tr>\n" +
                 "            <td align=\"left\" bgcolor=\"#ffffff\" style=\"padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\">\n" +
-                "              <p style=\"margin: 0;\">Se ha realizado una solicitud del tipo "+tipoSolicitudLowerCase+" para un sensor de <i>"+tipoSensor+" (ID "+idSensor+")</i> para el area <strong>"+area+"(ID "+idArea+")</strong>.\n" +
+                "              <p style=\"margin: 0;\">Se ha realizado una solicitud del tipo "+tipoSolicitudLowerCase+" para un sensor de <i>"+tipoSensor+" (ID "+idSensor+")</i> en el area <strong>"+area+"(ID "+idArea+")</strong>.\n" +
                 "            </td>\n" +
                 "          </tr>\n" +
                 "          <!-- end copy -->\n" +

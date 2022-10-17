@@ -38,19 +38,23 @@ public class TicketServiceImpl implements  TicketService{
         Usuario usuario=usuarioRepository.findByEmail(usuarioEmail);
         ticketRepository.save(ticket);
 
-        String unidadDeMedida=sensorRepository.getUnidadDeMedida(ticket.getTipoSensor().toString());
         Long areaID= areaRepository.getIDArea(ticket.getNombreArea());
+        String unidadDeMedida=sensorRepository.getUnidadDeMedida(ticket.getTipoSensor().toString());
+        Long idSensor=null;
 
+        if(ticket.getTipo().toString()=="ALTA_SENSOR"){
+            SensorContext sensorContext=new SensorContext(ticket.getTipoSensor().toString(),"SOLICITADO",unidadDeMedida,areaID);
+            idSensor= sensorService.postSensorSolicitado(sensorContext).getId();
 
-        SensorContext sensorContext=new SensorContext(ticket.getTipoSensor().toString(),"SOLICITADO",unidadDeMedida,areaID);
-        Long idSensor= sensorService.postSensorSolicitado(sensorContext).getId();
-
-
-        usuario.getSolicitudes().add(ticket);
-        usuarioRepository.save(usuario);
+        }else{
+            idSensor= ticket.getIdSensor();
+        }
 
         emailSenderService.enviarEmail(ticket.getTipoSensor().toString(),idSensor.toString(),
                 ticket.getNombreArea(),areaID.toString(),ticket.getTipo().toString());
+
+        usuario.getSolicitudes().add(ticket);
+        usuarioRepository.save(usuario);
 
         return ticket;
     }

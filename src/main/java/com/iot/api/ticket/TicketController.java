@@ -3,6 +3,7 @@ package com.iot.api.ticket;
 
 
 import com.iot.api.seguridad.JWTVerificador;
+import com.iot.api.seguridad.excepciones.BadRequestException;
 import com.iot.api.sensor.util.SensorContext;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -36,6 +37,10 @@ public class TicketController {
     @PostMapping
     public ResponseEntity<Ticket> postSensor(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody Ticket ticket) throws MessagingException {
         jwtVerificador.validarToken(authHeader);
+        if(ticket.getIdSensor()==null && !ticket.getTipo().toString().equals("ALTA_SENSOR")){
+            throw new BadRequestException("El id del sensor es necesario en este tipo de ticket.");
+        }
+
         String usuarioEmail= jwtVerificador.getUsuarioEmail(authHeader);
 
         Ticket ticketPost=ticketService.postTicket(ticket,usuarioEmail);
