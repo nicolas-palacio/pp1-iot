@@ -52,4 +52,15 @@ public class Usuario {
         return Collections.singletonList(authority);
     }*/
 
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", usuarioRol=" + usuarioRol +
+                ", solicitudes=" + solicitudes +
+                '}';
+    }
 }

@@ -1,14 +1,19 @@
 package com.iot.api.ticket;
 
 
+
+import com.iot.api.seguridad.JWTVerificador;
+import com.iot.api.sensor.util.SensorContext;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,6 +22,8 @@ import java.util.List;
 public class TicketController {
     @Autowired
     private TicketServiceImpl ticketService;
+    @Autowired
+    private JWTVerificador jwtVerificador;
 
     @Operation(summary = "Devuelve una lista con todas las solicitudes.",tags = {"Solicitudes"})
     @GetMapping
@@ -25,5 +32,15 @@ public class TicketController {
         return ticketService.getTodosLosTickets();
     }
 
+    @Operation(summary = "Inserta un nuevo ticket.",tags = {"Solicitudes"},security = {@SecurityRequirement(name="BearerJWT")})
+    @PostMapping
+    public ResponseEntity<Ticket> postSensor(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody Ticket ticket) throws MessagingException {
+        jwtVerificador.validarToken(authHeader);
+        String usuarioEmail= jwtVerificador.getUsuarioEmail(authHeader);
+
+        Ticket ticketPost=ticketService.postTicket(ticket,usuarioEmail);
+
+        return new ResponseEntity<Ticket>(ticketPost, HttpStatus.CREATED);
+    }
 
 }

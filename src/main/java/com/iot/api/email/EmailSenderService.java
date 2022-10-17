@@ -209,7 +209,7 @@ public class EmailSenderService {
                 "          <!-- start copy -->\n" +
                 "          <tr>\n" +
                 "            <td align=\"left\" bgcolor=\"#ffffff\" style=\"padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\">\n" +
-                "              <p style=\"margin: 0;\">Se ha realizado una solicitud para dar de alta un sensor del tipo <i>"+tipo+"</i> para <strong>"+area+"</strong>.\n" +
+                "              <p style=\"margin: 0;\">Se ha realizado una solicitud para dar de alta un sensor del tipo <i>"+tipo+" (ID 351)</i> para <strong>"+area+"(ID 1)</strong>.\n" +
                 "            </td>\n" +
                 "          </tr>\n" +
                 "          <!-- end copy -->\n" +

@@ -3,6 +3,7 @@ package com.iot.api.sensor.util;
 public enum TipoSensor {
     TEMPERATURA,
     PUERTA,
+    VENTANA,
     HUMEDAD,
     CALIDAD_DE_AIRE,
     PROXIMIDAD,

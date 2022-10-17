@@ -14,4 +14,7 @@ public interface AreaRepository extends JpaRepository<Area,Long> {
     @Query("SELECT a FROM Area a JOIN FETCH a.sensores s WHERE s.tipo='PUERTA'")
    List<Area> getAreasPuertas();
 
+    @Query("SELECT a FROM Area a  WHERE a.nombre=?1")
+    Optional<Area> getAreaPorNombre(String nombre);
+
 }

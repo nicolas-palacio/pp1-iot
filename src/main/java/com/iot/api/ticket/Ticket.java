@@ -28,21 +28,21 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_sequence")
     private Long id;
 
-    @NotNull
+    @NotNull(message = "El tipo no debe estar vacio.")
     @Enumerated(EnumType.STRING)
     private TipoTicket tipo;
 
-    @NotNull
+    @NotNull(message = "El estado no debe estar vacio.")
     @Enumerated(EnumType.STRING)
     private EstadoTicket estado;
 
-    @NotNull
+    @NotNull(message = "El tipo de sensor no debe estar vacio.")
     private TipoSensor tipoSensor;
 
-    @NotNull
+    @NotNull(message = "El nombre del area no debe estar vacio.")
     private String nombreArea;
 
-    @NotNull
+    @NotNull(message = "La descripcion no puede estar vacia.")
     private String descripcion;
 
     @ManyToMany(mappedBy = "solicitudes")
@@ -53,9 +53,9 @@ public class Ticket {
     private Timestamp fecha;
 
 
-    public Ticket(TipoTicket tipo, EstadoTicket estado, TipoSensor tipoSensor, String nombreArea, String descripcion, Timestamp fecha) {
+    public Ticket(TipoTicket tipo,TipoSensor tipoSensor, String nombreArea, String descripcion, Timestamp fecha) {
         this.tipo = tipo;
-        this.estado = estado;
+        this.estado = Enum.valueOf(EstadoTicket.class,"ABIERTA");
         this.tipoSensor = tipoSensor;
         this.nombreArea = nombreArea;
         this.descripcion = descripcion;
