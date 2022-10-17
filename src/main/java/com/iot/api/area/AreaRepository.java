@@ -17,4 +17,7 @@ public interface AreaRepository extends JpaRepository<Area,Long> {
     @Query("SELECT a FROM Area a  WHERE a.nombre=?1")
     Optional<Area> getAreaPorNombre(String nombre);
 
+    @Query("SELECT a.id FROM Area a  WHERE a.nombre=?1")
+    Long getIDArea(String nombre);
+
 }

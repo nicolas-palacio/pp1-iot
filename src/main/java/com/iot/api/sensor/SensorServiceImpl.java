@@ -49,7 +49,19 @@ public class SensorServiceImpl implements SensorService{
                 ,sensor.getUnidadDeMedida(),area.get());
         sensorRepository.save(sensorPost);
 
-        emailSenderService.enviarEmail(sensor.getTipo().toString(),"Aula 1");
+       // emailSenderService.enviarEmail(sensor.getTipo().toString(),"Aula 1");
+
+        return sensorPost;
+    }
+
+    @Override
+    public Sensor postSensorSolicitado(SensorContext sensor) {
+        Optional<Area> area=areaRepository.findById(sensor.getAreaId());
+
+        Sensor sensorPost=new Sensor(Enum.valueOf(TipoSensor.class,sensor.getTipo().toString()),
+                Enum.valueOf(EstadoSensor.class,sensor.getEstado().toString())
+                ,sensor.getUnidadDeMedida(),area.get());
+        sensorRepository.save(sensorPost);
 
         return sensorPost;
     }

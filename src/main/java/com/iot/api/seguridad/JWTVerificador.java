@@ -39,7 +39,6 @@ public class JWTVerificador {
             throw new BadRequestException("Header");
         }
 
-        System.out.println("EMAILLLL "+email);
         return email;
     }
 
