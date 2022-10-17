@@ -25,7 +25,7 @@ public class TicketController {
     @Autowired
     private JWTVerificador jwtVerificador;
 
-    @Operation(summary = "Devuelve una lista con todas las solicitudes.",tags = {"Solicitudes"})
+    @Operation(summary = "Devuelve una lista con todas las solicitudes.",tags = {"Solicitudes"},security = {@SecurityRequirement(name="BearerJWT")})
     @GetMapping
     @ResponseBody
     public List<Ticket> getTickets(){

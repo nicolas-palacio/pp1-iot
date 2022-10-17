@@ -20,12 +20,12 @@ public class EmailSenderService {
 
 
     @Async
-    public void enviarEmail(String tipo,String area) throws MessagingException {
+    public void enviarEmail(String tipoSensor,String idSensor, String area,String idArea,String tipoSolicitud) throws MessagingException {
         try{
 
             MimeMessage mimeMessage= mailSender.createMimeMessage();
             MimeMessageHelper helper= new MimeMessageHelper(mimeMessage,"utf-8");
-            helper.setText(buildEmail(tipo,area),true);
+            helper.setText(buildEmail(tipoSensor,idSensor,area,idArea,tipoSolicitud),true);
             helper.setFrom("nico.p22013@gmail.com");
             helper.setTo("nicolaspalacio986@gmail.com");
             helper.setSubject("Solicitud de alta de sensor");
@@ -40,14 +40,17 @@ public class EmailSenderService {
 
     }
 
-    private String buildEmail(String tipo, String area) {
+    private String buildEmail(String tipoSensor,String idSensor, String area,String idArea,String tipoSolicitud) {
+        String tipoSolicitudLowerCase=tipoSolicitud.replace('_',' ');
+
+
         return "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<head>\n" +
                 "\n" +
                 "  <meta charset=\"utf-8\">\n" +
                 "  <meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\">\n" +
-                "  <title>Solicitud de alta de sensor</title>\n" +
+                "  <title>Solicitud de "+tipoSolicitudLowerCase.toLowerCase()+"</title>\n" +
                 "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
                 "  <style type=\"text/css\">\n" +
                 "  /**\n" +
@@ -183,7 +186,7 @@ public class EmailSenderService {
                 "        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"max-width: 600px;\">\n" +
                 "          <tr>\n" +
                 "            <td align=\"left\" bgcolor=\"#ffffff\" style=\"padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;\">\n" +
-                "              <h1 style=\"margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;\">Solicitud de alta de sensor</h1>\n" +
+                "              <h1 style=\"margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;\">Solicitud de "+tipoSolicitudLowerCase.toLowerCase()+"</h1>\n" +
                 "            </td>\n" +
                 "          </tr>\n" +
                 "        </table>\n" +
@@ -209,7 +212,7 @@ public class EmailSenderService {
                 "          <!-- start copy -->\n" +
                 "          <tr>\n" +
                 "            <td align=\"left\" bgcolor=\"#ffffff\" style=\"padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\">\n" +
-                "              <p style=\"margin: 0;\">Se ha realizado una solicitud para dar de alta un sensor del tipo <i>"+tipo+" (ID 351)</i> para <strong>"+area+"(ID 1)</strong>.\n" +
+                "              <p style=\"margin: 0;\">Se ha realizado una solicitud del tipo "+tipoSolicitudLowerCase+" para un sensor de <i>"+tipoSensor+" (ID "+idSensor+")</i> para el area <strong>"+area+"(ID "+idArea+")</strong>.\n" +
                 "            </td>\n" +
                 "          </tr>\n" +
                 "          <!-- end copy -->\n" +
