@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import java.util.List;
+
 import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
 
 @Service
@@ -22,12 +24,13 @@ public class EmailSenderService {
     @Async
     public void enviarEmail(String tipoSensor,String idSensor, String area,String idArea,String tipoSolicitud) throws MessagingException {
         try{
+            String[] destinatarios={"nicolaspalacio986@gmail.com","leomendoza274@gmail.com"};
 
             MimeMessage mimeMessage= mailSender.createMimeMessage();
             MimeMessageHelper helper= new MimeMessageHelper(mimeMessage,"utf-8");
             helper.setText(buildEmail(tipoSensor,idSensor,area,idArea,tipoSolicitud),true);
             helper.setFrom("nico.p22013@gmail.com");
-            helper.setTo("nicolaspalacio986@gmail.com");
+            helper.setTo(destinatarios);
             helper.setSubject("Solicitud de "+tipoSolicitud.replace('_',' ').toLowerCase());
 
             mailSender.send(mimeMessage);
