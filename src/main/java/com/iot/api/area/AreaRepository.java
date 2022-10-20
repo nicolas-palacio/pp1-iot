@@ -20,4 +20,10 @@ public interface AreaRepository extends JpaRepository<Area,Long> {
     @Query("SELECT a.id FROM Area a  WHERE a.nombre=?1")
     Long getIDArea(String nombre);
 
+    @Query(value = "select piso from areas group by piso order by piso asc;",nativeQuery = true)
+    List<Integer> pisos();
+
+    @Query("SELECT a FROM Area a WHERE a.piso=?1")
+    List<Area> getAreaPorPiso(Integer piso);
+
 }

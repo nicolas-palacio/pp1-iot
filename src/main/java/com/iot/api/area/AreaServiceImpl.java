@@ -6,9 +6,7 @@ import com.iot.api.sensor.SensorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -17,8 +15,29 @@ public class AreaServiceImpl implements AreaService{
     private SensorRepository sensorRepository;
 
     @Override
-    public List<Area> getAreas() {
-        return areaRepository.findAll();
+    public Map<String, Object> getAreas() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        //List<Area> areas=null;
+        List<Integer> pisos=areaRepository.pisos();
+
+        for(int i=0;i<pisos.size();i++){
+            List<Area> areas=areaRepository.getAreaPorPiso(pisos.get(i));
+            map.put("piso "+pisos.get(i),areas);
+        }
+
+        return map;
+    }
+
+    private List<Area> filtrarAreaPorPiso(List<Area>areas,Integer piso) {
+        List<Area> areasReturn=new ArrayList<Area>();
+
+        for(Area area:areas){
+            if(area.getPiso()==piso){
+                areasReturn.add(area);
+            }
+        }
+
+        return areasReturn;
     }
 
     @Override

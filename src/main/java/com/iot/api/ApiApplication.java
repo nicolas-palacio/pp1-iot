@@ -12,7 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Módulo IOT - API", version = "2.0.0"))
+@OpenAPIDefinition(info = @Info(title = "Módulo IOT - API", version = "1.2.0"))
 @SecurityScheme(name = "BearerJWT",type= SecuritySchemeType.HTTP,scheme = "bearer",bearerFormat ="JWT",description = "Seguridad basada en JWT.")
 public class ApiApplication{
 

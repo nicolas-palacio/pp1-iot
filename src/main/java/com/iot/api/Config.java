@@ -234,7 +234,14 @@ public class Config {
                             puerta,
                             30.0
                     );
-                    registroRepository.saveAll(List.of(registroPuerta0,registroPuerta1,registroTemp,registroPuerta));
+                    Registro registroHumedad=new Registro(
+                            timestamp,
+                            "Porcentaje",
+                            10.0,
+                            humedad,
+                            30.0
+                    );
+                    registroRepository.saveAll(List.of(registroPuerta0,registroPuerta1,registroTemp,registroPuerta,registroHumedad));
                 }
 
             }else if(area.getNombre().contains("Patio")){
