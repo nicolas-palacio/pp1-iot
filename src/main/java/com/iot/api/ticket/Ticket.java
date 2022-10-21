@@ -2,6 +2,8 @@ package com.iot.api.ticket;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iot.api.area.Area;
 import com.iot.api.sensor.util.EstadoSensor;
 import com.iot.api.sensor.util.TipoSensor;
@@ -47,8 +49,11 @@ public class Ticket {
 
     private Long idSensor;
 
-    @ManyToMany(mappedBy = "solicitudes")
-    List<Usuario> usuarioList;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="usuario_id", nullable=true)
+    //@JsonManagedReference
+    Usuario usuario;
 
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")

@@ -4,6 +4,7 @@ package com.iot.api.ticket;
 
 import com.iot.api.seguridad.JWTVerificador;
 import com.iot.api.seguridad.excepciones.BadRequestException;
+import com.iot.api.seguridad.excepciones.NotFoundException;
 import com.iot.api.sensor.util.SensorContext;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -47,5 +48,23 @@ public class TicketController {
 
         return new ResponseEntity<Ticket>(ticketPost, HttpStatus.CREATED);
     }
+
+    @Operation(summary = "Cierra la solicitud,segun el ID indicado.",tags = {"Solicitudes"},security = {@SecurityRequirement(name="BearerJWT")})
+    @PutMapping("/cerrar/{id}")
+    public ResponseEntity<Ticket> cerrarTicket(@RequestHeader("Authorization") String authHeader, @PathVariable(name = "id") Long id){
+        if(id==null){
+            throw new BadRequestException("ID solicitud.");
+        }else if(ticketService.getTicket(id).isEmpty()){
+            throw new NotFoundException("ID solicitud.");
+        }
+
+        jwtVerificador.validarToken(authHeader);
+
+        Ticket ticket=ticketService.cerrarTicket(id);
+
+        return new ResponseEntity<Ticket>(ticket,HttpStatus.OK);
+
+    }
+
 
 }

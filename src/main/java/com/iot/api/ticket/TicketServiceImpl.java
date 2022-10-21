@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -34,6 +35,11 @@ public class TicketServiceImpl implements  TicketService{
     }
 
     @Override
+    public Optional<Ticket> getTicket(Long id) {
+        return ticketRepository.findById(id);
+    }
+
+    @Override
     public Ticket postTicket(Ticket ticket,String usuarioEmail) throws MessagingException {
         Usuario usuario=usuarioRepository.findByEmail(usuarioEmail);
         ticketRepository.save(ticket);
@@ -50,12 +56,27 @@ public class TicketServiceImpl implements  TicketService{
             idSensor= ticket.getIdSensor();
         }
 
-        emailSenderService.enviarEmail(ticket.getTipoSensor().toString(),idSensor.toString(),
-                ticket.getNombreArea(),areaID.toString(),ticket.getTipo().toString());
+       /* emailSenderService.enviarEmail(ticket.getTipoSensor().toString(),idSensor.toString(),
+                ticket.getNombreArea(),areaID.toString(),ticket.getTipo().toString());*/
 
         usuario.getSolicitudes().add(ticket);
         usuarioRepository.save(usuario);
 
         return ticket;
+    }
+
+    @Override
+    public Ticket cerrarTicket(Long id) {
+        ticketRepository.cerrarTicket(id);
+
+        return ticketRepository.findById(id).get();
+    }
+
+    @Override
+    public Ticket deleteTicket(Long id) {
+        Optional<Ticket> ticket=ticketRepository.findById(id);
+        sensorRepository.deleteById(id);
+
+        return ticket.get();
     }
 }
