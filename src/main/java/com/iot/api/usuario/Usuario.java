@@ -2,6 +2,8 @@ package com.iot.api.usuario;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iot.api.ticket.Ticket;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,12 +34,14 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private UsuarioRol usuarioRol;
 
-    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "appUsuario",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
     /*@JoinTable(
             name = "solicitudes_usuario",
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "ticket_id"))*/
-    @JsonBackReference
+
+    @JsonManagedReference
     List<Ticket> solicitudes;
 
 

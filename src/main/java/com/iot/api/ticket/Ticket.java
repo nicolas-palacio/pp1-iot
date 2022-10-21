@@ -1,6 +1,7 @@
 package com.iot.api.ticket;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -49,11 +50,12 @@ public class Ticket {
 
     private Long idSensor;
 
-    @JsonIgnore
+
+    //@JsonIgnore
     @ManyToOne
     @JoinColumn(name="usuario_id", nullable=true)
-    //@JsonManagedReference
-    Usuario usuario;
+    @JsonBackReference
+    Usuario appUsuario;
 
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")

@@ -5,7 +5,6 @@ import com.iot.api.email.EmailSenderService;
 import com.iot.api.sensor.SensorRepository;
 import com.iot.api.sensor.SensorServiceImpl;
 import com.iot.api.sensor.util.SensorContext;
-import com.iot.api.sensor.util.TipoSensor;
 import com.iot.api.usuario.Usuario;
 import com.iot.api.usuario.UsuarioRepository;
 import lombok.AllArgsConstructor;
@@ -42,6 +41,7 @@ public class TicketServiceImpl implements  TicketService{
     @Override
     public Ticket postTicket(Ticket ticket,String usuarioEmail) throws MessagingException {
         Usuario usuario=usuarioRepository.findByEmail(usuarioEmail);
+        ticket.setAppUsuario(usuario);
         ticketRepository.save(ticket);
 
         Long areaID= areaRepository.getIDArea(ticket.getNombreArea());
@@ -78,5 +78,12 @@ public class TicketServiceImpl implements  TicketService{
         sensorRepository.deleteById(id);
 
         return ticket.get();
+    }
+
+    @Override
+    public List<Ticket> getUsuario(Usuario usuario) {
+        System.out.println("EMAIL USUARIO ES "+usuario.getEmail());
+
+        return ticketRepository.getTicketsDeUsuario(usuario.getEmail());
     }
 }
