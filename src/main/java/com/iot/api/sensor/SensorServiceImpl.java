@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +41,13 @@ public class SensorServiceImpl implements SensorService{
     @Override
     public Optional<Sensor> getSensor(Long id) {
         return sensorRepository.findById(id);
+    }
+
+    @Override
+    public List<TipoSensor> tiposDeSensores() {
+        List<TipoSensor> tipos= new ArrayList<>(EnumSet.allOf(TipoSensor.class));
+
+        return tipos;
     }
 
     @Override

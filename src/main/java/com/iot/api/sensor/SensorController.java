@@ -7,6 +7,7 @@ import com.iot.api.seguridad.excepciones.BadRequestException;
 import com.iot.api.seguridad.excepciones.InternalServerErrorException;
 import com.iot.api.seguridad.excepciones.NotFoundException;
 import com.iot.api.sensor.util.SensorContext;
+import com.iot.api.sensor.util.TipoSensor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +66,14 @@ public class SensorController {
         Optional<List<Sensor>> sensores=sensorService.getSensoresPorTipo(tipo);
 
         return sensores;
+    }
+
+    @Operation(summary = "Devuelve una lista con los tipos de sensores.",tags = {"Sensores"})
+    @GetMapping("/tipos")
+    @ResponseBody
+    public List<String> getTipoSensores(){
+
+        return Collections.singletonList(sensorService.tiposDeSensores().toString());
     }
 
     @Operation(summary = "Inserta un nuevo sensor.",tags = {"Sensores"},security = {@SecurityRequirement(name="BearerJWT")})

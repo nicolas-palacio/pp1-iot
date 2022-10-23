@@ -14,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "api/areas")
@@ -51,6 +48,14 @@ public class AreaController {
         }
 
         return area;
+    }
+
+    @Operation(summary = "Devuelve la cantidad de pisos del colegio.",tags = {"Areas"})
+    @GetMapping("/pisos")
+    @ResponseBody
+    public List<Integer> getCantidadDePisos(){
+
+        return List.of(0,1,2,3);
     }
 
     @Operation(summary = "Devuelve una lista de las areas que tengan su puerta abierta.",tags = {"Areas"})

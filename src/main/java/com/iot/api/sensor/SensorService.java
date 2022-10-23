@@ -1,6 +1,7 @@
 package com.iot.api.sensor;
 
 import com.iot.api.sensor.util.SensorContext;
+import com.iot.api.sensor.util.TipoSensor;
 
 import javax.mail.MessagingException;
 import java.util.List;
@@ -10,6 +11,9 @@ public interface SensorService {
     List<Sensor> getTodosLosSensores();
     Optional<List<Sensor>> getSensoresPorTipo(String tipo);
     Optional<Sensor> getSensor(Long id);
+
+    List<TipoSensor> tiposDeSensores();
+
     Sensor postSensor(SensorContext sensor) throws MessagingException;
 
     Sensor postSensorSolicitado(SensorContext sensor);
