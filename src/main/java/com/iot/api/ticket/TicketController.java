@@ -6,6 +6,7 @@ import com.iot.api.seguridad.JWTVerificador;
 import com.iot.api.seguridad.excepciones.BadRequestException;
 import com.iot.api.seguridad.excepciones.NotFoundException;
 import com.iot.api.sensor.util.SensorContext;
+import com.iot.api.ticket.util.TicketContext;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
@@ -36,15 +37,16 @@ public class TicketController {
 
     @Operation(summary = "Inserta un nuevo ticket.",tags = {"Solicitudes"},security = {@SecurityRequirement(name="BearerJWT")})
     @PostMapping
-    public ResponseEntity<Ticket> postSensor(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody Ticket ticket) throws MessagingException {
+    public ResponseEntity<Ticket> postSensor(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody TicketContext ticketContext) throws MessagingException {
         jwtVerificador.validarToken(authHeader);
-        if(ticket.getIdSensor()==null && !ticket.getTipo().toString().equals("ALTA_SENSOR")){
+        if(ticketContext.getIdSensor()==null && !ticketContext.getTipo().toString().equals("ALTA_SENSOR")){
             throw new BadRequestException("El id del sensor es necesario en este tipo de ticket.");
         }
 
         String usuarioEmail= jwtVerificador.getUsuarioEmail(authHeader);
 
-        Ticket ticketPost=ticketService.postTicket(ticket,usuarioEmail);
+        Ticket ticketPost=new Ticket(ticketContext.getTipo(),ticketContext.getTipoSensor(),ticketContext.getNombreArea(),ticketContext.getDescripcion());
+        ticketService.postTicket(ticketPost,usuarioEmail);
 
         return new ResponseEntity<Ticket>(ticketPost, HttpStatus.CREATED);
     }

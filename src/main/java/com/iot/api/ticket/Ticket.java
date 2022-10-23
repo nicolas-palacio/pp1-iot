@@ -18,6 +18,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -62,13 +63,16 @@ public class Ticket {
     private Timestamp fecha;
 
 
-    public Ticket(TipoTicket tipo,TipoSensor tipoSensor, String nombreArea, String descripcion, Timestamp fecha) {
+    public Ticket(TipoTicket tipo,TipoSensor tipoSensor, String nombreArea, String descripcion) {
         this.tipo = tipo;
         this.estado = Enum.valueOf(EstadoTicket.class,"ABIERTA");
         this.tipoSensor = tipoSensor;
         this.nombreArea = nombreArea;
         this.descripcion = descripcion;
-        this.fecha = fecha;
+
+        LocalDateTime now=LocalDateTime.now();
+        Timestamp timestamp = Timestamp.valueOf(now);
+        this.fecha = timestamp;
     }
 
 
