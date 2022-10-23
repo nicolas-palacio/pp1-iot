@@ -24,4 +24,22 @@ public class JWTVerificador {
         }
         return jwt;
     }
+
+    public String getUsuarioEmail(String authHeader){
+        String jwt=null;
+        String email=null;
+        if (authHeader != null && authHeader.startsWith("Bearer")) {
+            jwt = authHeader.substring(7);
+            email = jwtUtil.validateTokenAndRetrieveSubject(jwt);
+
+            if(email.equals("") || email.isEmpty()){
+                throw new NotFoundException("Usuario no encontrado");
+            }
+        }else {
+            throw new BadRequestException("Header");
+        }
+
+        return email;
+    }
+
 }

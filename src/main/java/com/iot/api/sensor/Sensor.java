@@ -1,6 +1,6 @@
 package com.iot.api.sensor;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import com.iot.api.registro.Registro;
 import com.iot.api.area.Area;
 import com.iot.api.sensor.util.EstadoSensor;
@@ -19,6 +19,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Table(name="sensores")
+/*@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")*/
 public class Sensor {
 
     @SequenceGenerator(name = "sensor_sequence",sequenceName = "sensor_sequence", allocationSize = 1)
@@ -38,12 +41,16 @@ public class Sensor {
     @Enumerated(EnumType.STRING)
     private EstadoSensor estado;
 
-    @JsonIgnore
+   @JsonIgnore
     @ManyToOne
     @JoinColumn(name="area_id", nullable=true)
+   // @JsonManagedReference
+   //@JsonBackReference
     private Area area;
 
-    @OneToMany(mappedBy = "sensorR",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "sensor",cascade = CascadeType.ALL,orphanRemoval = true)
+   // @JsonManagedReference
+   // @JsonBackReference
     private List<Registro> registros;
 
     public Sensor(TipoSensor tipo,EstadoSensor estado,String unidadDeMedida,Area area){

@@ -1,6 +1,7 @@
 package com.iot.api.area;
 
 
+import com.fasterxml.jackson.annotation.*;
 import com.iot.api.sensor.Sensor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,9 @@ import java.util.List;
 @Setter
 @Table(name="areas")
 @NoArgsConstructor
+/*@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")*/
 public class Area {
     @SequenceGenerator(name = "area_sequence",sequenceName = "area_sequence", allocationSize = 1)
     @Id
@@ -30,13 +34,14 @@ public class Area {
     /*@NotEmpty(message = "La Descripcion del area no debe estar vacia")
     private String descripcion;*/
 
-    @OneToMany(mappedBy = "area",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    //@JsonIgnore
+    @OneToMany(mappedBy = "area",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+   // @JsonManagedReference
     private List<Sensor> sensores;
 
     public Area(String nombre,Integer piso){
         this.nombre=nombre;
         this.piso=piso;
-        //this.descripcion=descripcion;
     }
 
 }

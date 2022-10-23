@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +68,7 @@ public class SensorController {
 
     @Operation(summary = "Inserta un nuevo sensor.",tags = {"Sensores"},security = {@SecurityRequirement(name="BearerJWT")})
     @PostMapping
-    public ResponseEntity<Sensor> postSensor(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody SensorContext sensor){
+    public ResponseEntity<Sensor> postSensor(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody SensorContext sensor) throws MessagingException {
         jwtVerificador.validarToken(authHeader);
 
         Sensor sensorPost=sensorService.postSensor(sensor);

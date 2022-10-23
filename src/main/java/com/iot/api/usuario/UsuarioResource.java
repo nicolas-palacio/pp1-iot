@@ -6,6 +6,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iot.api.seguridad.JWTUtil;
+import com.iot.api.ticket.Ticket;
+import com.iot.api.ticket.TicketServiceImpl;
 import com.iot.api.usuario.tokenExpired.TokenExpiredServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -37,6 +39,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class UsuarioResource {
     private final UsuarioServiceImpl appUserServiceImpl;
     private final TokenExpiredServiceImpl tokenExpiredService;
+
+    private final TicketServiceImpl ticketService;
     @Autowired
     private JWTUtil jwtUtil;
 
@@ -56,7 +60,7 @@ public class UsuarioResource {
             jwt=authHeader.substring(7);
 
             if(tokenExpiredService.getTokenExpired(jwt)!=null && tokenExpiredService.getTokenExpired(jwt).equals(jwt)){
-                return "User blocked BV";
+                return "User blocked";
             }
 
             String email=jwtUtil.validateTokenAndRetrieveSubject(jwt);
@@ -66,6 +70,28 @@ public class UsuarioResource {
 
         }
         return userInfo;
+    }
+
+    @Operation(summary = "Devuelve las solicitudes del usuario.",tags = {"Usuarios"},security = {@SecurityRequirement(name="BearerJWT")})
+    @GetMapping("/user/tickets")
+    public List<Ticket> getUsuarioTickets(@RequestHeader("Authorization") String authHeader){
+        Usuario usuario=null;
+        String jwt=null;
+        UsuarioInfo userInfo=null;
+        String email="";
+
+        if(authHeader!=null && authHeader.startsWith("Bearer")){
+            jwt=authHeader.substring(7);
+
+            email=jwtUtil.validateTokenAndRetrieveSubject(jwt);
+
+            usuario=appUserServiceImpl.getUser(email);
+
+
+
+        }
+
+        return ticketService.getUsuario(usuario);
     }
 
     /*@PostMapping("/role/addtouser")

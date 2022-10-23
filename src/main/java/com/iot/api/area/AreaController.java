@@ -14,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -29,8 +31,11 @@ public class AreaController {
     @Operation(summary = "Devuelve una lista con todas las areas de la escuela.",tags = {"Areas"})
     @GetMapping
     @ResponseBody
-    public List<Area> getAreas(){
-        return areaService.getAreas();
+    public ResponseEntity<Object> getAreas(){
+
+        return new ResponseEntity<Object>(areaService.getAreas(),HttpStatus.OK);
+
+        //return areaService.getAreas();
     }
 
     @Operation(summary = "Devuelve el area, junto con sus sensores, segun el ID indicado.",tags = {"Areas"})

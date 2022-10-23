@@ -1,6 +1,10 @@
 package com.iot.api.usuario;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.iot.api.ticket.Ticket;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,6 +34,17 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private UsuarioRol usuarioRol;
 
+
+    @OneToMany(mappedBy = "appUsuario",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+    /*@JoinTable(
+            name = "solicitudes_usuario",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "ticket_id"))*/
+
+    @JsonManagedReference
+    List<Ticket> solicitudes;
+
+
     public Usuario(String nombre, String email, String password, UsuarioRol usuarioRol) {
         this.nombre = nombre;
         this.email = email;
@@ -42,4 +58,15 @@ public class Usuario {
         return Collections.singletonList(authority);
     }*/
 
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", usuarioRol=" + usuarioRol +
+                ", solicitudes=" + solicitudes +
+                '}';
+    }
 }
