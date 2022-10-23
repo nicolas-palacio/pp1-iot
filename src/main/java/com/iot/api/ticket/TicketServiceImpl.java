@@ -2,6 +2,7 @@ package com.iot.api.ticket;
 
 import com.iot.api.area.AreaRepository;
 import com.iot.api.email.EmailSenderService;
+import com.iot.api.sensor.Sensor;
 import com.iot.api.sensor.SensorRepository;
 import com.iot.api.sensor.SensorServiceImpl;
 import com.iot.api.sensor.util.SensorContext;
@@ -66,10 +67,24 @@ public class TicketServiceImpl implements  TicketService{
     }
 
     @Override
-    public Ticket cerrarTicket(Long id) {
-        ticketRepository.cerrarTicket(id);
+    public Ticket desaprobarTicket(Long id) {
+        ticketRepository.desaprobarTicket(id);
 
         return ticketRepository.findById(id).get();
+    }
+
+    @Override
+    public Ticket aprobarTicket(Long id) {
+        ticketRepository.aprobarTicket(id);
+        Ticket ticket=ticketRepository.findById(id).get();
+
+        if(ticket.getTipo().toString().equals("BAJA_SENSOR")){
+            Optional<Sensor> sensor=sensorRepository.findById(ticket.getIdSensor());
+            System.out.println(sensor.toString());
+            sensorRepository.deleteSensorPorId(ticket.getIdSensor());
+        }
+
+        return ticket;
     }
 
     @Override

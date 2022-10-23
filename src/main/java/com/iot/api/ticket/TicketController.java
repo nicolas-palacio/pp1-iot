@@ -45,14 +45,31 @@ public class TicketController {
 
         String usuarioEmail= jwtVerificador.getUsuarioEmail(authHeader);
 
-        Ticket ticketPost=new Ticket(ticketContext.getTipo(),ticketContext.getTipoSensor(),ticketContext.getNombreArea(),ticketContext.getDescripcion());
+        Ticket ticketPost=new Ticket(ticketContext.getTipo(),ticketContext.getTipoSensor(),ticketContext.getNombreArea(),ticketContext.getDescripcion(),ticketContext.getIdSensor());
         ticketService.postTicket(ticketPost,usuarioEmail);
 
         return new ResponseEntity<Ticket>(ticketPost, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Cierra la solicitud,segun el ID indicado.",tags = {"Solicitudes"},security = {@SecurityRequirement(name="BearerJWT")})
-    @PutMapping("/cerrar/{id}")
+    @Operation(summary = "Aprueba la solicitud,segun el ID indicado.",tags = {"Solicitudes"},security = {@SecurityRequirement(name="BearerJWT")})
+    @PutMapping("/aprobar/{id}")
+    public ResponseEntity<Ticket> aprobarTicket(@RequestHeader("Authorization") String authHeader, @PathVariable(name = "id") Long id){
+        if(id==null){
+            throw new BadRequestException("ID solicitud.");
+        }else if(ticketService.getTicket(id).isEmpty()){
+            throw new NotFoundException("ID solicitud.");
+        }
+
+        jwtVerificador.validarToken(authHeader);
+
+        Ticket ticket=ticketService.aprobarTicket(id);
+
+        return new ResponseEntity<Ticket>(ticket,HttpStatus.OK);
+
+    }
+
+    @Operation(summary = "Desaprueba la solicitud,segun el ID indicado.",tags = {"Solicitudes"},security = {@SecurityRequirement(name="BearerJWT")})
+    @PutMapping("/desaprobar/{id}")
     public ResponseEntity<Ticket> cerrarTicket(@RequestHeader("Authorization") String authHeader, @PathVariable(name = "id") Long id){
         if(id==null){
             throw new BadRequestException("ID solicitud.");
@@ -62,7 +79,7 @@ public class TicketController {
 
         jwtVerificador.validarToken(authHeader);
 
-        Ticket ticket=ticketService.cerrarTicket(id);
+        Ticket ticket=ticketService.desaprobarTicket(id);
 
         return new ResponseEntity<Ticket>(ticket,HttpStatus.OK);
 

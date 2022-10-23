@@ -13,8 +13,9 @@ public interface TicketService {
 
     Ticket postTicket(Ticket ticket,String usuarioEmail) throws MessagingException;
 
-    Ticket cerrarTicket(Long id);
+    Ticket desaprobarTicket(Long id);
 
+    Ticket aprobarTicket(Long id);
     Ticket deleteTicket(Long id);
 
     List<Ticket> getUsuario(Usuario usuario);

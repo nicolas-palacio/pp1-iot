@@ -36,6 +36,10 @@ public interface SensorRepository extends JpaRepository<Sensor,Long> {
             "SET s.estado = 'DESHABILITADO' WHERE s.id = ?1")
     int deshabilitarSensor(Long id);
 
+    @Modifying
+    @Query("DELETE FROM Sensor s WHERE s.id=?1")
+    void deleteSensorPorId(Long id);
+
     @Query(value = "SELECT s.unidad_de_medida FROM sensores s WHERE s.tipo=:tipo limit 1",nativeQuery = true)
     String getUnidadDeMedida(@Param("tipo")String tipo);
 

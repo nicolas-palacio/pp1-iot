@@ -63,12 +63,13 @@ public class Ticket {
     private Timestamp fecha;
 
 
-    public Ticket(TipoTicket tipo,TipoSensor tipoSensor, String nombreArea, String descripcion) {
+    public Ticket(TipoTicket tipo,TipoSensor tipoSensor, String nombreArea, String descripcion,Long idSensor) {
         this.tipo = tipo;
         this.estado = Enum.valueOf(EstadoTicket.class,"ABIERTA");
         this.tipoSensor = tipoSensor;
         this.nombreArea = nombreArea;
         this.descripcion = descripcion;
+        this.idSensor=idSensor;
 
         LocalDateTime now=LocalDateTime.now();
         Timestamp timestamp = Timestamp.valueOf(now);

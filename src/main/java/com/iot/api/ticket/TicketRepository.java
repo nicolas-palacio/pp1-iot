@@ -15,8 +15,13 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket,Long> {
     @Modifying
     @Query("UPDATE Ticket t " +
-            "SET t.estado = 'CERRADA' WHERE t.id = ?1")
-    int cerrarTicket(Long id);
+            "SET t.estado = 'DESAPROBADA' WHERE t.id = ?1")
+    int desaprobarTicket(Long id);
+
+    @Modifying
+    @Query("UPDATE Ticket t " +
+            "SET t.estado = 'APROBADA' WHERE t.id = ?1")
+    int aprobarTicket(Long id);
 
     @Query("SELECT t from Ticket t where t.appUsuario.email=?1")
     List<Ticket> getTicketsDeUsuario(String email);
