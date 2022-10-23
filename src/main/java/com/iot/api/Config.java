@@ -37,6 +37,7 @@ public class Config {
 @Bean
     CommandLineRunner commandLineRunnerSensor(UsuarioServiceImpl usuarioService){
         return args -> {
+
             altasDeAreas();
             altasSensores();
 
@@ -241,7 +242,7 @@ public class Config {
                             humedad,
                             30.0
                     );
-                    registroRepository.saveAll(List.of(registroPuerta0,registroPuerta1,registroTemp,registroPuerta,registroHumedad));
+                    //registroRepository.saveAll(List.of(registroPuerta0,registroPuerta1,registroTemp,registroPuerta,registroHumedad));
                 }
 
             }else if(area.getNombre().contains("Patio")){

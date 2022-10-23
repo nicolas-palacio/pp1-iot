@@ -35,7 +35,7 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private TipoTicket tipo;
 
-    @NotNull(message = "El estado no debe estar vacio.")
+   // @NotNull(message = "El estado no debe estar vacio.")
     @Enumerated(EnumType.STRING)
     private EstadoTicket estado;
 
