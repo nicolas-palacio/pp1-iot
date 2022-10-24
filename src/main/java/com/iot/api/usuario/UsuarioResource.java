@@ -76,7 +76,7 @@ public class UsuarioResource {
     }
 
     @Operation(summary = "Devuelve el token del usuario.",tags = {"Usuarios"},security = {@SecurityRequirement(name="BearerJWT")})
-    @GetMapping("/token")
+    @GetMapping("/user/token")
     public Object getToken(@RequestHeader("Email") String emailUsuario,@RequestHeader("Usuario") String nombre,
                            @RequestHeader("Rol") String rol){
 
@@ -123,7 +123,6 @@ public class UsuarioResource {
 
        // new ObjectMapper().writeValue(response.getOutputStream(),tokens);
 
-        System.out.println("TOKEN USUARIO "+access_token);
         return access_token;
     }
 
