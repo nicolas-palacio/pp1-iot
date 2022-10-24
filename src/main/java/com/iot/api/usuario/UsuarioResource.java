@@ -72,6 +72,33 @@ public class UsuarioResource {
         return userInfo;
     }
 
+    @Operation(summary = "Devuelve el token del usuario.",tags = {"Usuarios"},security = {@SecurityRequirement(name="BearerJWT")})
+    @GetMapping("/token")
+    public Object getToken(@RequestHeader("Email") String emailUsuario,@RequestHeader("Usuario") String nombre,
+                           @RequestHeader("Rol") String rol){
+
+        Usuario usuario= appUserServiceImpl.getUser(emailUsuario);
+
+        if(usuario==null){
+               appUserServiceImpl.guardarUsuario(emailUsuario,rol,nombre);
+        }
+
+
+
+           /* String email=jwtUtil.validateTokenAndRetrieveSubject(jwt);
+
+            usuario=appUserServiceImpl.getUser(email);
+            userInfo=new UsuarioInfo(usuario.getNombre(),email);*/
+
+
+        return null;
+    }
+
+
+
+
+
+
     @Operation(summary = "Devuelve las solicitudes del usuario.",tags = {"Usuarios"},security = {@SecurityRequirement(name="BearerJWT")})
     @GetMapping("/user/tickets")
     public List<Ticket> getUsuarioTickets(@RequestHeader("Authorization") String authHeader){
@@ -102,6 +129,8 @@ public class UsuarioResource {
     @Operation(summary = "Guarda un nuevo usuario.",tags = {"Usuarios"},security = {@SecurityRequirement(name="BearerJWT")})
     @PostMapping
     public ResponseEntity<Usuario> saveUser(@RequestHeader("Authorization") String authHeader,@RequestBody Usuario usuario){
+
+
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
         return ResponseEntity.created(uri).body(appUserServiceImpl.saveUser(usuario));
     }

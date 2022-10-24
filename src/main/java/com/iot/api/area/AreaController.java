@@ -28,7 +28,7 @@ public class AreaController {
     @Operation(summary = "Devuelve una lista con todas las areas de la escuela.",tags = {"Areas"})
     @GetMapping
     @ResponseBody
-    public ResponseEntity<Object> getAreas(){
+    public ResponseEntity<Object> getAreas() throws CloneNotSupportedException {
 
         return new ResponseEntity<Object>(areaService.getAreas(),HttpStatus.OK);
 

@@ -20,7 +20,7 @@ import java.util.List;
 /*@JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")*/
-public class Area {
+public class Area  implements Cloneable{
     @SequenceGenerator(name = "area_sequence",sequenceName = "area_sequence", allocationSize = 1)
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "area_sequence")
@@ -42,6 +42,10 @@ public class Area {
     public Area(String nombre,Integer piso){
         this.nombre=nombre;
         this.piso=piso;
+    }
+
+    public Object clone()throws CloneNotSupportedException{
+        return super.clone();
     }
 
 }

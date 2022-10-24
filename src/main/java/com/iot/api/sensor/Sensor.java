@@ -22,7 +22,7 @@ import java.util.List;
 /*@JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")*/
-public class Sensor {
+public class Sensor implements Cloneable{
 
     @SequenceGenerator(name = "sensor_sequence",sequenceName = "sensor_sequence", allocationSize = 1)
     @Id
@@ -71,5 +71,9 @@ public class Sensor {
                 ", area=" + area +
                 ", registros=" + registros +
                 '}';
+    }
+
+    public Object clone()throws CloneNotSupportedException{
+        return super.clone();
     }
 }

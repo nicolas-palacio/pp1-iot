@@ -43,6 +43,14 @@ public class UsuarioServiceImpl implements UserDetailsService{
         return usuarioRepository.save(usuario);
     }
 
+    public Usuario guardarUsuario(String email,String rol,String nombre) {
+        String encodedPassword= bCryptPasswordEncoder.encode("secure190");
+        Usuario usuario=new Usuario(nombre,email,encodedPassword,Enum.valueOf(UsuarioRol.class,rol.toUpperCase()));
+
+
+        return usuarioRepository.save(usuario);
+    }
+
 
 
 

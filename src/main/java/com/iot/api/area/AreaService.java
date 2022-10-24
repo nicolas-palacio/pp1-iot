@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface AreaService {
-    Map<String,Object> getAreas();
+    Map<String,Object> getAreas() throws CloneNotSupportedException;
     Optional<Area> getArea(Long id);
     void postArea(Area area);
     void deleteArea(Long id);

@@ -1,6 +1,7 @@
 package com.iot.api.area;
 
 import com.iot.api.registro.Registro;
+import com.iot.api.registro.RegistroService;
 import com.iot.api.sensor.Sensor;
 import com.iot.api.sensor.SensorRepository;
 import lombok.AllArgsConstructor;
@@ -14,31 +15,40 @@ public class AreaServiceImpl implements AreaService{
     private AreaRepository areaRepository;
     private SensorRepository sensorRepository;
 
+    private RegistroService registroService;
+
     @Override
-    public Map<String, Object> getAreas() {
+    public Map<String, Object> getAreas() throws CloneNotSupportedException {
         Map<String, Object> map = new HashMap<String, Object>();
         //List<Area> areas=null;
         List<Integer> pisos=areaRepository.pisos();
 
         for(int i=0;i<pisos.size();i++){
-            List<Area> areas=areaRepository.getAreaPorPiso(pisos.get(i));
+            List<Area> areas=new ArrayList<>(areaRepository.getAreaPorPiso(pisos.get(i)));
+            //List<Area> areasConUltimoRegistro=filtrarArea(areas);
             map.put("piso "+pisos.get(i),areas);
         }
 
         return map;
     }
 
-    private List<Area> filtrarAreaPorPiso(List<Area>areas,Integer piso) {
+    private List<Area> filtrarArea(List<Area>areas) throws CloneNotSupportedException {
         List<Area> areasReturn=new ArrayList<Area>();
 
-        for(Area area:areas){
-            if(area.getPiso()==piso){
-                areasReturn.add(area);
-            }
+        for(int i=0;i<areas.size();i++){
+            Area nuevaArea= (Area) areas.get(i).clone();
+
+            List<Sensor> sensores=new ArrayList<>(getUltimoRegistro(nuevaArea.getSensores()));
+            //nuevaArea.getSensores().removeAll(nuevaArea.getSensores());
+            nuevaArea.getSensores().addAll(sensores);
+
+
+            areasReturn.add(nuevaArea);
         }
 
         return areasReturn;
     }
+
 
     @Override
     public Optional<Area> getArea(Long id) {

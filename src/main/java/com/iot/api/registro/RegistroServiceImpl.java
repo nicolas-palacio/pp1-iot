@@ -49,4 +49,9 @@ public class RegistroServiceImpl implements RegistroService{
     public void deleteTodosLosRegistros() {
         registroRepository.deleteAll();
     }
+
+    @Override
+    public Registro getUltimoRegistro(Long idSensor) {
+        return registroRepository.ultimoRegistro(idSensor);
+    }
 }
