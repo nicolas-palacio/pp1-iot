@@ -109,7 +109,7 @@ public class UsuarioResource {
                 .withSubject(usuario.getEmail())
                 .withExpiresAt(date)
                 .withIssuer("/api/usuarios/token")
-                .withClaim("rol", authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .withClaim("roles", authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         String refresh_token= JWT.create()
                 .withSubject(usuario.getEmail())
