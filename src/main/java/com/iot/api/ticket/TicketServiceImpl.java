@@ -43,7 +43,7 @@ public class TicketServiceImpl implements  TicketService{
     public Ticket postTicket(Ticket ticket,String usuarioEmail) throws MessagingException {
         Usuario usuario=usuarioRepository.findByEmail(usuarioEmail);
         ticket.setAppUsuario(usuario);
-        ticketRepository.save(ticket);
+
 
         Long areaID= areaRepository.getIDArea(ticket.getNombreArea());
         String unidadDeMedida=sensorRepository.getUnidadDeMedida(ticket.getTipoSensor().toString());
@@ -59,6 +59,9 @@ public class TicketServiceImpl implements  TicketService{
 
         /*emailSenderService.enviarEmail(ticket.getTipoSensor().toString(),idSensor.toString(),
                 ticket.getNombreArea(),areaID.toString(),ticket.getTipo().toString());*/
+
+        ticket.setIdSensor(idSensor);
+        ticketRepository.save(ticket);
 
         usuario.getSolicitudes().add(ticket);
         usuarioRepository.save(usuario);
@@ -80,8 +83,12 @@ public class TicketServiceImpl implements  TicketService{
 
         if(ticket.getTipo().toString().equals("BAJA_SENSOR")){
             Optional<Sensor> sensor=sensorRepository.findById(ticket.getIdSensor());
-            System.out.println(sensor.toString());
             sensorRepository.deleteSensorPorId(ticket.getIdSensor());
+        }
+
+        if(ticket.getTipo().toString().equals("ALTA_SENSOR")){
+            Optional<Sensor> sensor=sensorRepository.findById(ticket.getIdSensor());
+            sensorService.habilitarSensor(ticket.getIdSensor());
         }
 
         return ticket;
