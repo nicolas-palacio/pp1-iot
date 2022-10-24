@@ -17,6 +17,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,9 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -81,17 +84,47 @@ public class UsuarioResource {
 
         if(usuario==null){
                appUserServiceImpl.guardarUsuario(emailUsuario,rol,nombre);
+               usuario= appUserServiceImpl.getUser(emailUsuario);
         }
 
 
+        return crearToken(usuario);
+    }
 
-           /* String email=jwtUtil.validateTokenAndRetrieveSubject(jwt);
+    private String crearToken(Usuario usuario){
+        String date_string = "22-10-2024";
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date =null;
+        try {
+            date = formatter.parse(date_string);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
-            usuario=appUserServiceImpl.getUser(email);
-            userInfo=new UsuarioInfo(usuario.getNombre(),email);*/
+        Collection<SimpleGrantedAuthority> authorities= new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(usuario.getUsuarioRol().toString()));
 
+        Algorithm algorithm= Algorithm.HMAC256("secret".getBytes());//save the word
+        String access_token= JWT.create()
+                .withSubject(usuario.getEmail())
+                .withExpiresAt(date)
+                .withIssuer("/api/usuarios/token")
+                .withClaim("rol", authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .sign(algorithm);
+        String refresh_token= JWT.create()
+                .withSubject(usuario.getEmail())
+                .withExpiresAt(new Date(System.currentTimeMillis() + 90 *60 * 1000))
+                .withIssuer("/api/usuarios/token")
+                .sign(algorithm);
 
-        return null;
+        Map<String,String> tokens=new HashMap<>();
+        tokens.put("access_token",access_token);
+        tokens.put("refresh_token",refresh_token);
+
+       // new ObjectMapper().writeValue(response.getOutputStream(),tokens);
+
+        System.out.println("TOKEN USUARIO "+access_token);
+        return access_token;
     }
 
 
