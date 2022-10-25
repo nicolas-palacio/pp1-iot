@@ -57,8 +57,8 @@ public class TicketServiceImpl implements  TicketService{
             idSensor= ticket.getIdSensor();
         }
 
-        /*emailSenderService.enviarEmail(ticket.getTipoSensor().toString(),idSensor.toString(),
-                ticket.getNombreArea(),areaID.toString(),ticket.getTipo().toString());*/
+        emailSenderService.enviarEmail(ticket.getTipoSensor().toString(),idSensor.toString(),
+                ticket.getNombreArea(),areaID.toString(),ticket.getTipo().toString());
 
         ticket.setIdSensor(idSensor);
         ticketRepository.save(ticket);
@@ -75,7 +75,7 @@ public class TicketServiceImpl implements  TicketService{
         Ticket ticket=ticketRepository.findById(id).get();
 
         if(ticket.getTipo().toString()=="ALTA_SENSOR"){
-            System.out.println("ENTRE ACA");
+
             sensorService.deleteSensor(ticket.getIdSensor());
         }
 
