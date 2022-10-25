@@ -78,7 +78,7 @@ public class TicketServiceImpl implements  TicketService{
 
             sensorService.deleteSensor(ticket.getIdSensor());
         }
-
+//
 
         return ticketRepository.findById(id).get();
     }
