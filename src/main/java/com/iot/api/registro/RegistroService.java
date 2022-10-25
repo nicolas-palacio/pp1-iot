@@ -14,4 +14,6 @@ public interface RegistroService {
     void deleteTodosLosRegistros();
 
     Registro getUltimoRegistro(Long idSensor);
+
+    void deleteRegistros();
 }

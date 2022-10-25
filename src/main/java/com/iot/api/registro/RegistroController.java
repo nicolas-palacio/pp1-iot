@@ -78,5 +78,15 @@ public class RegistroController {
         return new ResponseEntity<>(registro.get(),HttpStatus.OK);
     }
 
+    @Operation(summary = "Elimina todos los registros.",tags = {"Registros"},security = {@SecurityRequirement(name="BearerJWT")})
+    @DeleteMapping
+    public ResponseEntity<Registro> deleteRegistros(@RequestHeader("Authorization") String authHeader){
+        jwtVerificador.validarToken(authHeader);
+
+        registroService.deleteRegistros();
+
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
 
 }
