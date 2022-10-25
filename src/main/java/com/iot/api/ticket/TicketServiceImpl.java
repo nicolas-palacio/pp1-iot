@@ -72,6 +72,12 @@ public class TicketServiceImpl implements  TicketService{
     @Override
     public Ticket desaprobarTicket(Long id) {
         ticketRepository.desaprobarTicket(id);
+        Ticket ticket=ticketRepository.findById(id).get();
+
+        if(ticket.getTipo().toString()=="APROBAR_SENSOR"){
+            sensorService.deleteSensor(ticket.getIdSensor());
+        }
+
 
         return ticketRepository.findById(id).get();
     }
