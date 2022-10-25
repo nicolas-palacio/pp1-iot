@@ -38,14 +38,14 @@ public class Config {
     CommandLineRunner commandLineRunnerSensor(UsuarioServiceImpl usuarioService){
         return args -> {
 
-            //altasDeAreas();
-            //altasSensores();
+            altasDeAreas();
+            altasSensores();
 
-            /*String encodedPassword= bCryptPasswordEncoder.encode("secure190");
+            String encodedPassword= bCryptPasswordEncoder.encode("secure190");
             usuarioService.saveUser(new Usuario("Admin","adminfake@gmail.com",encodedPassword,
                     Enum.valueOf(UsuarioRol.class,"ADMIN")));
             usuarioService.saveUser(new Usuario("Director","directorfake@gmail.com",encodedPassword,
-                    Enum.valueOf(UsuarioRol.class,"ADMIN")));*/
+                    Enum.valueOf(UsuarioRol.class,"ADMIN")));
         };
 
     }
