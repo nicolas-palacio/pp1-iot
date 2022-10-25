@@ -74,7 +74,8 @@ public class TicketServiceImpl implements  TicketService{
         ticketRepository.desaprobarTicket(id);
         Ticket ticket=ticketRepository.findById(id).get();
 
-        if(ticket.getTipo().toString()=="APROBAR_SENSOR"){
+        if(ticket.getTipo().toString()=="ALTA_SENSOR"){
+            System.out.println("ENTRE ACA");
             sensorService.deleteSensor(ticket.getIdSensor());
         }
 
