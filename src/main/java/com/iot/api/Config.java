@@ -34,12 +34,12 @@ public class Config {
     RegistroRepository registroRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-/*@Bean
+@Bean
     CommandLineRunner commandLineRunnerSensor(UsuarioServiceImpl usuarioService){
         return args -> {
 
-           // altasDeAreas();
-            //altasSensores();
+            altasDeAreas();
+            altasSensores();
 
             String encodedPassword= bCryptPasswordEncoder.encode("secure190");
             usuarioService.saveUser(new Usuario("Admin","adminfake@gmail.com",encodedPassword,
@@ -48,7 +48,7 @@ public class Config {
                     Enum.valueOf(UsuarioRol.class,"ADMIN")));
         };
 
-    }*/
+    }
 
     private void altasDeAreas() {
         //Aulas Primera Planta
