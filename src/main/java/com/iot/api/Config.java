@@ -20,7 +20,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -38,14 +37,23 @@ public class Config {
     CommandLineRunner commandLineRunnerSensor(UsuarioServiceImpl usuarioService){
         return args -> {
 
-            altasDeAreas();
-            altasSensores();
+            try{
 
-            String encodedPassword= bCryptPasswordEncoder.encode("secure190");
-            usuarioService.saveUser(new Usuario("Admin","adminfake@gmail.com",encodedPassword,
-                    Enum.valueOf(UsuarioRol.class,"ADMIN")));
-            usuarioService.saveUser(new Usuario("Director","directorfake@gmail.com",encodedPassword,
-                    Enum.valueOf(UsuarioRol.class,"ADMIN")));
+                if(areaRepository.findById(1L).isEmpty()){
+                    altasDeAreas();
+                    altasSensores();
+
+                    String encodedPassword= bCryptPasswordEncoder.encode("secure190");
+                    usuarioService.saveUser(new Usuario("Admin","adminfake@gmail.com",encodedPassword,
+                            Enum.valueOf(UsuarioRol.class,"ADMIN")));
+                    usuarioService.saveUser(new Usuario("Director","directorfake@gmail.com",encodedPassword,
+                            Enum.valueOf(UsuarioRol.class,"ADMIN")));
+                }
+
+            }catch (Error e){
+
+            }
+
         };
 
     }
