@@ -57,14 +57,16 @@ public class TicketServiceImpl implements  TicketService{
             idSensor= ticket.getIdSensor();
         }
 
-        emailSenderService.enviarEmail(ticket.getTipoSensor().toString(),idSensor.toString(),
-                ticket.getNombreArea(),areaID.toString(),ticket.getTipo().toString());
+
 
         ticket.setIdSensor(idSensor);
         ticketRepository.save(ticket);
 
         usuario.getSolicitudes().add(ticket);
         usuarioRepository.save(usuario);
+
+        emailSenderService.enviarEmail(ticket.getTipoSensor().toString(),idSensor.toString(),
+                ticket.getNombreArea(),areaID.toString(),ticket.getTipo().toString());
 
         return ticket;
     }
