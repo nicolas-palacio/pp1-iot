@@ -2,6 +2,7 @@ package com.iot.api.area;
 
 
 import com.fasterxml.jackson.annotation.*;
+import com.iot.api.instituto.Instituto;
 import com.iot.api.sensor.Sensor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,14 @@ public class Area  implements Cloneable{
     @OneToMany(mappedBy = "area",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
    // @JsonManagedReference
     private List<Sensor> sensores;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="instituto_id", nullable=true)
+    // @JsonManagedReference
+    //@JsonBackReference
+    private Instituto instituto;
+
 
     public Area(String nombre,Integer piso){
         this.nombre=nombre;

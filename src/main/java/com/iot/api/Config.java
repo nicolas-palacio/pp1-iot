@@ -91,7 +91,7 @@ public class Config {
 
         //Oficinas Segunda Planta
         for (int i = 1; i <= 3; i++) {
-            Area oficina = new Area("Oficina " + (i + 8), 1);
+            Area oficina = new Area("Oficina " + (i + 8), 2);
             areaRepository.save(oficina);
         }
 
@@ -175,7 +175,7 @@ public class Config {
         Area comedorTerceraPlanta=new Area("Comedor 2",3);
         Area biblioteca=new Area("Biblioteca",0);
         Area salonDeActosPlantaBaja=new Area("Salon de actos 1",0);
-        Area salonDeActosPrimPlanta=new Area("Salon de actos 2",1);
+        Area salonDeActosPrimPlanta=new Area("Salon de actos 2",3);
 
         areaRepository.saveAll(List.of(cocina,comedorPlantaBaja,comedorTerceraPlanta,biblioteca,salonDeActosPlantaBaja,salonDeActosPrimPlanta));
 
