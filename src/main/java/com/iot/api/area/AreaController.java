@@ -74,7 +74,7 @@ public class AreaController {
         return new ResponseEntity<Object>(areaService.getNombreAreas(),HttpStatus.OK);
     }
 
-    @Operation(summary = "Devuelve una lista con los nombres de las areas.",tags = {"Areas"})
+    @Operation(summary = "Devuelve una lista con los nombres de las areas, segun el piso indicado.",tags = {"Areas"})
     @GetMapping("/nombres/{piso}")
     @ResponseBody
     public ResponseEntity<Object>  getNombreAreas(@PathVariable(name = "piso")int piso){
