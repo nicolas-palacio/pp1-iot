@@ -26,4 +26,7 @@ public interface AreaRepository extends JpaRepository<Area,Long> {
     @Query("SELECT a FROM Area a WHERE a.piso=?1")
     List<Area> getAreaPorPiso(Integer piso);
 
+    @Query("SELECT a.nombre FROM Area a WHERE a.piso=?1")
+    List<String> getNombreAreas(Integer piso);
+
 }

@@ -12,4 +12,7 @@ public interface AreaService {
     void postArea(Area area);
     void deleteArea(Long id);
     List<Area> getAreasPuertasAbiertas();
+
+    Map<String, Object> getNombreAreas();
+    Map<String, Object> getNombreAreasPorPiso(int piso);
 }

@@ -86,6 +86,34 @@ public class AreaServiceImpl implements AreaService{
         return areasReturn;
     }
 
+    @Override
+    public Map<String, Object> getNombreAreas() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Integer> pisos=areaRepository.pisos();
+
+        for(int i=0;i<pisos.size();i++){
+            List<String> areas=new ArrayList<>(areaRepository.getNombreAreas(pisos.get(i)));
+            map.put("piso "+pisos.get(i),areas);
+        }
+
+
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getNombreAreasPorPiso(int piso) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Integer> pisos=areaRepository.pisos();
+
+        List<String> areas=new ArrayList<>(areaRepository.getNombreAreas(piso));
+        map.put("piso "+pisos.get(piso),areas);
+
+
+
+        return map;
+    }
+
     private List<Sensor> getUltimoRegistro(List<Sensor>sensores){
         List<Sensor> sensoresConUltimoRegistro=sensores;
 

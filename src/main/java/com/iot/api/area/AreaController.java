@@ -66,6 +66,24 @@ public class AreaController {
         return areaService.getAreasPuertasAbiertas();
     }
 
+    @Operation(summary = "Devuelve una lista con los nombres de las areas.",tags = {"Areas"})
+    @GetMapping("/nombres")
+    @ResponseBody
+    public ResponseEntity<Object> getNombreAreas(){
+
+        return new ResponseEntity<Object>(areaService.getNombreAreas(),HttpStatus.OK);
+    }
+
+    @Operation(summary = "Devuelve una lista con los nombres de las areas.",tags = {"Areas"})
+    @GetMapping("/nombres/{piso}")
+    @ResponseBody
+    public ResponseEntity<Object>  getNombreAreas(@PathVariable(name = "piso")int piso){
+
+        return new ResponseEntity<Object>(areaService.getNombreAreasPorPiso(piso),HttpStatus.OK);
+    }
+
+
+
     @Operation(summary = "Inserta una nueva area.",tags = {"Areas"},security = {@SecurityRequirement(name="BearerJWT")})
     @PostMapping
     public ResponseEntity<Area> postArea(@RequestHeader("Authorization") String authHeader,@Valid @RequestBody Area area){
