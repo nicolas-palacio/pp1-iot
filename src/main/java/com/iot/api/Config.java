@@ -48,6 +48,8 @@ public class Config {
                             Enum.valueOf(UsuarioRol.class,"ADMIN")));
                     usuarioService.saveUser(new Usuario("Director","directorfake@gmail.com",encodedPassword,
                             Enum.valueOf(UsuarioRol.class,"ADMIN")));
+                    usuarioService.saveUser(new Usuario("Directivo01","directivofake@gmail.com",encodedPassword,
+                            Enum.valueOf(UsuarioRol.class,"DIRECTIVO")));
                 }
 
             }catch (Error e){

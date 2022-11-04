@@ -6,6 +6,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iot.api.seguridad.JWTUtil;
+import com.iot.api.seguridad.excepciones.BadRequestException;
+import com.iot.api.seguridad.excepciones.ForbiddenException;
 import com.iot.api.ticket.Ticket;
 import com.iot.api.ticket.TicketServiceImpl;
 import com.iot.api.usuario.tokenExpired.TokenExpiredServiceImpl;
@@ -74,6 +76,32 @@ public class UsuarioResource {
         }
         return userInfo;
     }
+
+    @Operation(summary = "Devuelve los metodos a los que tiene autorizacion el usuario.",tags = {"Usuarios"},security = {@SecurityRequirement(name="BearerJWT")})
+    @GetMapping("/user/auth")
+    public Object getAuthUsuario(@RequestHeader("Authorization") String authHeader){
+        Usuario usuario=null;
+        String jwt=null;
+        String email=null;
+        UsuarioInfo userInfo=null;
+
+        if(authHeader!=null && authHeader.startsWith("Bearer")){
+            jwt=authHeader.substring(7);
+
+            email=jwtUtil.validateTokenAndRetrieveSubject(jwt);
+
+            usuario=appUserServiceImpl.getUser(email);
+
+        }
+
+        if(usuario.getUsuarioRol().toString().equals("ALUMNO")){
+            throw new ForbiddenException("Los alumnos que no sean de ultimo año no estan autorizados.");
+        }
+
+
+        return appUserServiceImpl.getUserAuth(email);
+    }
+
 
     @Operation(summary = "Devuelve el token del usuario.",tags = {"Usuarios"},security = {@SecurityRequirement(name="BearerJWT")})
     @GetMapping("/user/token")

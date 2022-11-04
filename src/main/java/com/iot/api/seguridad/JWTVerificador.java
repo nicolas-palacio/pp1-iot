@@ -2,8 +2,12 @@ package com.iot.api.seguridad;
 
 import com.iot.api.seguridad.excepciones.BadRequestException;
 import com.iot.api.seguridad.excepciones.NotFoundException;
+import com.iot.api.usuario.UsuarioRol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JWTVerificador {
@@ -41,5 +45,44 @@ public class JWTVerificador {
 
         return email;
     }
+
+    public Map<String, Object> getUserAuth(String rol){
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        if(rol.equals("DIRECTIVO")){
+            map.put("Modif. sensor",false);
+            map.put("Baja sensor",false);
+            map.put("Ver tabla solicitudes",true);
+            map.put("Alta sugerencia",true);
+            map.put("Baja sugerencia",false);
+        }
+
+        if(rol.equals("TECNICO")){
+            map.put("Modif. sensor",true);
+            map.put("Baja sensor",true);
+            map.put("Ver tabla solicitudes",true);
+            map.put("Alta sugerencia",true);
+            map.put("Baja sugerencia",true);
+        }
+
+        if(rol.equals("ALUMNO_ULTIMO_ANIO")){
+            map.put("Modif. sensor",false);
+            map.put("Baja sensor",false);
+            map.put("Ver tabla solicitudes",true);
+            map.put("Alta sugerencia",true);
+            map.put("Baja sugerencia",false);
+        }
+
+        if(rol.equals("ADMIN")){
+            map.put("Modif. sensor",true);
+            map.put("Baja sensor",true);
+            map.put("Ver tabla solicitudes",true);
+            map.put("Alta sugerencia",true);
+            map.put("Baja sugerencia",true);
+        }
+
+        return map;
+    }
+
 
 }
