@@ -50,6 +50,8 @@ public class Config {
                             Enum.valueOf(UsuarioRol.class,"ADMIN")));
                     usuarioService.saveUser(new Usuario("Directivo01","directivofake@gmail.com",encodedPassword,
                             Enum.valueOf(UsuarioRol.class,"DIRECTIVO")));
+
+                    altasSensoresMovimiento();
                 }
 
             }catch (Error e){
@@ -349,6 +351,23 @@ public class Config {
                         Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Boolean", area);
                 sensorRepository.saveAll(List.of(humo,gas,puerta,ventana));
             }
+        }
+
+    }
+
+    private void altasSensoresMovimiento() {
+        List<Area> areas=areaRepository.findAll();
+
+        for(Area area:areas){
+            if((!area.getNombre().contains("Pasillo") && !area.getNombre().contains("Patio") )){
+                Sensor movimiento = new Sensor(
+                        Enum.valueOf(TipoSensor.class, "PROXIMIDAD"),
+                        Enum.valueOf(EstadoSensor.class, "DISPONIBLE"), "Boolean", area);
+
+                sensorRepository.save(movimiento);
+
+            }
+
         }
 
     }
