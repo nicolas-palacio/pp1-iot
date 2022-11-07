@@ -51,6 +51,7 @@ public class Sensor implements Cloneable{
     @OneToMany(mappedBy = "sensor",cascade = CascadeType.ALL,orphanRemoval = true)
    // @JsonManagedReference
    // @JsonBackReference
+    @OrderBy("id")
     private List<Registro> registros;
 
     public Sensor(TipoSensor tipo,EstadoSensor estado,String unidadDeMedida,Area area){
