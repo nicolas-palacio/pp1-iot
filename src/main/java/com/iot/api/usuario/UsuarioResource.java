@@ -107,6 +107,9 @@ public class UsuarioResource {
     @GetMapping("/user/token")
     public Object getToken(@RequestHeader("Email") String emailUsuario,@RequestHeader("Usuario") String nombre,
                            @RequestHeader("Rol") String rol){
+        if(rol.equals("ALUMNO")){
+            return "";
+        }
 
         Usuario usuario= appUserServiceImpl.getUser(emailUsuario);
 
