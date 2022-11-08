@@ -113,6 +113,10 @@ public class UsuarioResource {
         if(usuario==null){
                appUserServiceImpl.guardarUsuario(emailUsuario,rol,nombre);
                usuario= appUserServiceImpl.getUser(emailUsuario);
+        }else if(usuario!=null && !usuario.getUsuarioRol().toString().equals(rol)){
+            appUserServiceImpl.deleteUsuario(usuario.getId());
+            appUserServiceImpl.guardarUsuario(emailUsuario,rol,nombre);
+            usuario= appUserServiceImpl.getUser(emailUsuario);
         }
 
 

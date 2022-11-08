@@ -62,6 +62,9 @@ public class UsuarioServiceImpl implements UserDetailsService{
         return usuarioRepository.save(usuario);
     }
 
+    public void deleteUsuario(Long id){
+        usuarioRepository.deleteById(id);
+    }
 
 
 
