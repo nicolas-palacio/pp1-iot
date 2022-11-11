@@ -92,7 +92,7 @@ public class AreaServiceImpl implements AreaService{
         List<Integer> pisos=areaRepository.pisos();
 
         for(int i=0;i<pisos.size();i++){
-            List<String> areas=new ArrayList<>(areaRepository.getNombreAreas(pisos.get(i)));
+            List<Object> areas=new ArrayList<>(areaRepository.getNombreAreas(pisos.get(i)));
             map.put("piso "+pisos.get(i),areas);
         }
 
@@ -106,7 +106,7 @@ public class AreaServiceImpl implements AreaService{
         Map<String, Object> map = new HashMap<String, Object>();
         List<Integer> pisos=areaRepository.pisos();
 
-        List<String> areas=new ArrayList<>(areaRepository.getNombreAreas(piso));
+        List<Object> areas=new ArrayList<>(areaRepository.getNombreAreas(piso));
         map.put("piso "+pisos.get(piso),areas);
 
 
