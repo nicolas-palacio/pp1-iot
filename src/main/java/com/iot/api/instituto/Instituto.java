@@ -1,9 +1,7 @@
 package com.iot.api.instituto;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iot.api.area.Area;
-import com.iot.api.sensor.Sensor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +28,7 @@ public class Instituto {
     //@JsonManagedReference
     private List<Area> areas;
 
-
-
+    public Instituto(String nombre) {
+        this.nombre = nombre;
+    }
 }

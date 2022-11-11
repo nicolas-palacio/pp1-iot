@@ -32,6 +32,21 @@ public class AreaServiceImpl implements AreaService{
         return map;
     }
 
+    @Override
+    public  Map<String,Object> getAreasByInstituto(Long id) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        //List<Area> areas=null;
+        List<Integer> pisos=areaRepository.pisos();
+
+        for(int i=0;i<pisos.size();i++){
+            List<Area> areas=new ArrayList<>(areaRepository.getAreaDeInstitutoPorPiso(pisos.get(i),id));
+            //List<Area> areasConUltimoRegistro=filtrarArea(areas);
+            map.put("piso "+pisos.get(i),areas);
+        }
+
+        return map;
+    }
+
     private List<Area> filtrarArea(List<Area>areas) throws CloneNotSupportedException {
         List<Area> areasReturn=new ArrayList<Area>();
 

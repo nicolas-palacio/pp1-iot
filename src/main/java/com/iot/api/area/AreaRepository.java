@@ -14,6 +14,9 @@ public interface AreaRepository extends JpaRepository<Area,Long> {
     @Query("SELECT a FROM Area a JOIN FETCH a.sensores s WHERE s.tipo='PUERTA'")
    List<Area> getAreasPuertas();
 
+    @Query("SELECT a FROM Area a WHERE a.instituto.id=?1")
+    List<Area> getAreasByInstituto(Long id);
+
     @Query("SELECT a FROM Area a  WHERE a.nombre=?1")
     Optional<Area> getAreaPorNombre(String nombre);
 
@@ -25,6 +28,10 @@ public interface AreaRepository extends JpaRepository<Area,Long> {
 
     @Query("SELECT a FROM Area a WHERE a.piso=?1")
     List<Area> getAreaPorPiso(Integer piso);
+
+ @Query("SELECT a FROM Area a WHERE a.piso=?1 AND a.instituto.id=?2")
+ List<Area> getAreaDeInstitutoPorPiso(Integer piso, Long idInstituto);
+
 
     @Query("SELECT a.id,a.nombre FROM Area a WHERE a.piso=?1")
     List<Object> getNombreAreas(Integer piso);

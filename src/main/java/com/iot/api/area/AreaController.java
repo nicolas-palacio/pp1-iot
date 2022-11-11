@@ -35,6 +35,21 @@ public class AreaController {
         //return areaService.getAreas();
     }
 
+    @Operation(summary = "Devuelve una lista con todas las areas del instituto indicado.",tags = {"Areas"})
+    @GetMapping("/instituto/{id}")
+    @ResponseBody
+    public ResponseEntity<Object> getAreas(@PathVariable(name = "id")Long id) throws CloneNotSupportedException {
+        if(id==null){
+            throw new BadRequestException("id");
+        }
+
+        return new ResponseEntity<Object>(areaService.getAreasByInstituto(id),HttpStatus.OK);
+
+        //return areaService.getAreas();
+    }
+
+
+
     @Operation(summary = "Devuelve el area, junto con sus sensores, segun el ID indicado.",tags = {"Areas"})
     @GetMapping("/ids/{id}")
     @ResponseBody

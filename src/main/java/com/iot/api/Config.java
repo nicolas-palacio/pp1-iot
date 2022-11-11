@@ -1,5 +1,7 @@
 package com.iot.api;
 
+import com.iot.api.instituto.Instituto;
+import com.iot.api.instituto.InstitutoRepository;
 import com.iot.api.registro.Registro;
 import com.iot.api.registro.RegistroRepository;
 import com.iot.api.area.Area;
@@ -29,6 +31,9 @@ public class Config {
     SensorRepository sensorRepository;
     @Autowired
     AreaRepository areaRepository;
+
+    @Autowired
+    InstitutoRepository institutoRepository;
     @Autowired
     RegistroRepository registroRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -63,62 +68,78 @@ public class Config {
     }
 
     private void altasDeAreas() {
+        Instituto manzanaIsac=new Instituto("La Manzana de Isaac");
+        institutoRepository.save(manzanaIsac);
+
         //Aulas Primera Planta
         for (int i = 1; i <= 10; i++) {
             Area aula = new Area("Aula " + i, 1);
+            aula.setInstituto(manzanaIsac);
             areaRepository.save(aula);
         }
+        //institutoRepository.save(manzanaIsac);
 
         //Aulas Segunda Planta
         for (int i = 1; i <= 10; i++) {
             Area aula = new Area("Aula " + (i + 10), 2);
+            aula.setInstituto(manzanaIsac);
             areaRepository.save(aula);
         }
 
         //Aulas Tercera Planta
         for (int i = 1; i <= 6; i++) {
             Area aula = new Area("Aula " + (i + 20), 3);
+            aula.setInstituto(manzanaIsac);
             areaRepository.save(aula);
         }
 
         //Oficinas Planta Baja
         for (int i = 1; i <= 6; i++) {
             Area oficina = new Area("Oficina " + i, 0);
+            oficina.setInstituto(manzanaIsac);
             areaRepository.save(oficina);
          }
 
         //Oficinas Primera Planta
         for (int i = 1; i <= 2; i++) {
             Area oficina = new Area("Oficina " + (i + 6), 1);
+            oficina.setInstituto(manzanaIsac);
             areaRepository.save(oficina);
         }
 
         //Oficinas Segunda Planta
         for (int i = 1; i <= 3; i++) {
             Area oficina = new Area("Oficina " + (i + 8), 2);
+            oficina.setInstituto(manzanaIsac);
             areaRepository.save(oficina);
         }
 
         //Oficinas Tercera Planta
         Area oficina = new Area("Oficina 12", 3);
+        oficina.setInstituto(manzanaIsac);
         areaRepository.save(oficina);
 
         //Patios Planta Baja
         for (int i = 1; i <= 2; i++) {
             Area patio = new Area("Patio " + i, 0);
+            patio.setInstituto(manzanaIsac);
             areaRepository.save(patio);
         }
 
         //Patio Primera Planta
         Area patio = new Area("Patio 3", 1);
+        patio.setInstituto(manzanaIsac);
         areaRepository.save(patio);
 
         //Patio Tercera Planta
         Area patioTerceraPlanta = new Area("Patio 4", 3);
+        patioTerceraPlanta.setInstituto(manzanaIsac);
         areaRepository.save(patioTerceraPlanta);
 
         Area gymPlantaBaja = new Area("Gym 1", 0);
         Area gymTerceraPlanta = new Area("Gym 2", 3);
+        gymPlantaBaja.setInstituto(manzanaIsac);
+        gymTerceraPlanta.setInstituto(manzanaIsac);
 
         areaRepository.saveAll(List.of(gymPlantaBaja, gymTerceraPlanta));
 
@@ -130,12 +151,17 @@ public class Config {
             }
         }
         Area laboFisicaPrimeraPlanta = new Area("Laboratorio Fisica 1", 1);
+        laboFisicaPrimeraPlanta.setInstituto(manzanaIsac);
         Area laboFisicaSegundaPlanta=new Area("Laboratorio Fisica 2",2);
+        laboFisicaSegundaPlanta.setInstituto(manzanaIsac);
         Area laboQuimPrimeraPlanta=new Area("Laboratorio Quimica 1",1);
+        laboQuimPrimeraPlanta.setInstituto(manzanaIsac);
         Area laboQuimSegundaPlanta=new Area("Laboratorio Quimica 2",2);
+        laboQuimSegundaPlanta.setInstituto(manzanaIsac);
         Area laboBioPrimeraPlanta=new Area("Laboratorio Biologia 1",1);
+        laboBioPrimeraPlanta.setInstituto(manzanaIsac);
         Area laboBioSegundaPlanta=new Area("Laboratorio Biologia 2",2);
-
+        laboBioSegundaPlanta.setInstituto(manzanaIsac);
 
         areaRepository.saveAll(List.of(laboFisicaPrimeraPlanta,laboBioSegundaPlanta,laboBioPrimeraPlanta,laboFisicaSegundaPlanta,laboQuimPrimeraPlanta,laboQuimSegundaPlanta));
 
@@ -144,25 +170,28 @@ public class Config {
         //Aulas virtuales
         for(int i=1;i<=3;i++){
             Area aulaVirtual=new Area("Aula virtual "+i,i);
-
+            aulaVirtual.setInstituto(manzanaIsac);
             areaRepository.save(aulaVirtual);
         }
 
         //Baños Planta Baja
         for(int i=1;i<=6;i++){
             Area baño=new Area("Baño "+i,0);
+            baño.setInstituto(manzanaIsac);
             areaRepository.save(baño);
         }
 
         //Baños Primera Planta
         for(int i=7;i<=9;i++){
             Area baño=new Area("Baño "+i,1);
+            baño.setInstituto(manzanaIsac);
             areaRepository.save(baño);
         }
 
         //Baños Segunda Planta
         for(int i=10;i<=13;i++){
             Area baño=new Area("Baño "+i,2);
+            baño.setInstituto(manzanaIsac);
             areaRepository.save(baño);
 
         }
@@ -170,19 +199,25 @@ public class Config {
         //Baños Tercera Planta
         for(int i=14;i<=16;i++){
             Area baño=new Area("Baño "+i,3);
+            baño.setInstituto(manzanaIsac);
             areaRepository.save(baño);
 
         }
 
         Area cocina=new Area("Cocina",0);
+        cocina.setInstituto(manzanaIsac);
         Area comedorPlantaBaja=new Area("Comedor 1",0);
+        comedorPlantaBaja.setInstituto(manzanaIsac);
         Area comedorTerceraPlanta=new Area("Comedor 2",3);
+        comedorTerceraPlanta.setInstituto(manzanaIsac);
         Area biblioteca=new Area("Biblioteca",0);
+        biblioteca.setInstituto(manzanaIsac);
         Area salonDeActosPlantaBaja=new Area("Salon de actos 1",0);
+        salonDeActosPlantaBaja.setInstituto(manzanaIsac);
         Area salonDeActosPrimPlanta=new Area("Salon de actos 2",3);
+        salonDeActosPrimPlanta.setInstituto(manzanaIsac);
 
         areaRepository.saveAll(List.of(cocina,comedorPlantaBaja,comedorTerceraPlanta,biblioteca,salonDeActosPlantaBaja,salonDeActosPrimPlanta));
-
 
     }
 
