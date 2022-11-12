@@ -10,6 +10,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -23,7 +25,7 @@ public class TicketContext {
 
     // @NotNull(message = "El estado no debe estar vacio.")
 
-    @NotNull(message = "El tipo de sensor no debe estar vacio.")
+    //@NotNull(message = "El tipo de sensor no debe estar vacio.")
     private TipoSensor tipoSensor;
 
     @NotNull(message = "El nombre del area no debe estar vacio.")
@@ -33,5 +35,7 @@ public class TicketContext {
     private String descripcion;
 
     private Long idSensor;
+
+    private ArrayList<String> URLs;
 
 }

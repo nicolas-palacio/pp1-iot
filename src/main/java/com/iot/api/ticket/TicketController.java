@@ -6,6 +6,7 @@ import com.iot.api.seguridad.JWTVerificador;
 import com.iot.api.seguridad.excepciones.BadRequestException;
 import com.iot.api.seguridad.excepciones.NotFoundException;
 import com.iot.api.sensor.util.SensorContext;
+import com.iot.api.sensor.util.TipoSensor;
 import com.iot.api.ticket.util.TicketContext;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -39,14 +40,26 @@ public class TicketController {
     @PostMapping
     public ResponseEntity<Ticket> postSensor(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody TicketContext ticketContext) throws MessagingException {
         jwtVerificador.validarToken(authHeader);
-        if(ticketContext.getIdSensor()==null && !ticketContext.getTipo().toString().equals("ALTA_SENSOR")){
-            throw new BadRequestException("El id del sensor es necesario en este tipo de ticket.");
+        Ticket ticketPost=null;
+
+
+        if(ticketContext.getIdSensor()==null && (ticketContext.getTipo().toString().equals("BAJA_SENSOR") || ticketContext.getTipo().toString().equals("MODIFICAR_SENSOR") ) ){
+                    //( ticketContext.getTipo().toString().equals("MODIFICAR_SENSOR"))){
+                throw new BadRequestException("El id del sensor es necesario en este tipo de ticket.");
         }
+
+
 
         String usuarioEmail= jwtVerificador.getUsuarioEmail(authHeader);
 
-        Ticket ticketPost=new Ticket(ticketContext.getTipo(),ticketContext.getTipoSensor(),ticketContext.getNombreArea(),ticketContext.getDescripcion(),ticketContext.getIdSensor());
+        if(ticketContext.getTipo().toString().equals("SUGERENCIA")){
+             ticketPost=new Ticket(ticketContext.getTipo(),Enum.valueOf(TipoSensor.class, "NO_IDENTIFICADO"),ticketContext.getNombreArea(),ticketContext.getDescripcion(),ticketContext.getIdSensor(),ticketContext.getURLs());
+        }else{
+            ticketPost=new Ticket(ticketContext.getTipo(),ticketContext.getTipoSensor(),ticketContext.getNombreArea(),ticketContext.getDescripcion(),ticketContext.getIdSensor(),ticketContext.getURLs());
+        }
+
         ticketService.postTicket(ticketPost,usuarioEmail);
+
 
         return new ResponseEntity<Ticket>(ticketPost, HttpStatus.CREATED);
     }

@@ -9,5 +9,6 @@ public enum TipoSensor {
     PROXIMIDAD,
     HUMO,
     GAS,
-    NIVEL_DE_RUIDO
+    NIVEL_DE_RUIDO,
+    NO_IDENTIFICADO
 }

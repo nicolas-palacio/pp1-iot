@@ -14,11 +14,13 @@ import com.iot.api.usuario.Usuario;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,7 +42,7 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private EstadoTicket estado;
 
-    @NotNull(message = "El tipo de sensor no debe estar vacio.")
+    //@NotNull(message = "El tipo de sensor no debe estar vacio.")
     private TipoSensor tipoSensor;
 
     @NotNull(message = "El nombre del area no debe estar vacio.")
@@ -63,7 +65,10 @@ public class Ticket {
     private Timestamp fecha;
 
 
-    public Ticket(TipoTicket tipo,TipoSensor tipoSensor, String nombreArea, String descripcion,Long idSensor) {
+    private ArrayList<String> URLs;
+
+
+    public Ticket(TipoTicket tipo,TipoSensor tipoSensor, String nombreArea, String descripcion,Long idSensor, ArrayList<String> urls) {
         this.tipo = tipo;
         this.estado = Enum.valueOf(EstadoTicket.class,"ABIERTA");
         this.tipoSensor = tipoSensor;
@@ -74,6 +79,22 @@ public class Ticket {
         LocalDateTime now=LocalDateTime.now();
         Timestamp timestamp = Timestamp.valueOf(now);
         this.fecha = timestamp;
+        this.URLs=urls;
+
+    }
+
+    public Ticket(TipoTicket tipo, String nombreArea, String descripcion,Long idSensor, ArrayList<String> urls) {
+        this.tipo = tipo;
+        this.estado = Enum.valueOf(EstadoTicket.class,"ABIERTA");
+        this.nombreArea = nombreArea;
+        this.descripcion = descripcion;
+        this.idSensor=idSensor;
+
+        LocalDateTime now=LocalDateTime.now();
+        Timestamp timestamp = Timestamp.valueOf(now);
+        this.fecha = timestamp;
+        this.URLs=urls;
+
     }
 
 
