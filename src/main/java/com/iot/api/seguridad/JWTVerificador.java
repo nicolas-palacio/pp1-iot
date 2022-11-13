@@ -50,6 +50,7 @@ public class JWTVerificador {
         Map<String, Object> map = new HashMap<String, Object>();
 
         if(rol.equals("DIRECTIVO")){
+            map.put("Alta sensor",false);
             map.put("Modif. sensor",false);
             map.put("Baja sensor",false);
             map.put("Ver tabla solicitudes",true);
@@ -58,6 +59,7 @@ public class JWTVerificador {
         }
 
         if(rol.equals("TECNICO")){
+            map.put("Alta sensor",true);
             map.put("Modif. sensor",true);
             map.put("Baja sensor",true);
             map.put("Ver tabla solicitudes",true);
@@ -66,6 +68,7 @@ public class JWTVerificador {
         }
 
         if(rol.equals("ALUMNO_ULTIMO_ANIO")){
+            map.put("Alta sensor",false);
             map.put("Modif. sensor",false);
             map.put("Baja sensor",false);
             map.put("Ver tabla solicitudes",true);
@@ -74,6 +77,7 @@ public class JWTVerificador {
         }
 
         if(rol.equals("ADMIN")){
+            map.put("Alta sensor",true);
             map.put("Modif. sensor",true);
             map.put("Baja sensor",true);
             map.put("Ver tabla solicitudes",true);
