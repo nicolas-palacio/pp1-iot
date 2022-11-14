@@ -71,9 +71,9 @@ public class SensorController {
     @Operation(summary = "Devuelve una lista con los tipos de sensores.",tags = {"Sensores"})
     @GetMapping("/tipos")
     @ResponseBody
-    public List<String> getTipoSensores(){
+    public ResponseEntity<Object> getTipoSensores(){
 
-        return Collections.singletonList(sensorService.tiposDeSensores().toString());
+        return new ResponseEntity<Object>(sensorService.tiposDeSensores(),HttpStatus.OK);
     }
 
     @Operation(summary = "Inserta un nuevo sensor.",tags = {"Sensores"},security = {@SecurityRequirement(name="BearerJWT")})
