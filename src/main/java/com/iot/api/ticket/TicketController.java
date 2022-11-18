@@ -53,7 +53,7 @@ public class TicketController {
         String usuarioEmail= jwtVerificador.getUsuarioEmail(authHeader);
 
         if(ticketContext.getTipo().toString().equals("SUGERENCIA")){
-             ticketPost=new Ticket(ticketContext.getTipo(),Enum.valueOf(TipoSensor.class, "NO_IDENTIFICADO"),ticketContext.getNombreArea(),ticketContext.getDescripcion(),ticketContext.getIdSensor(),ticketContext.getURLs());
+             ticketPost=new Ticket(ticketContext.getTipo(),Enum.valueOf(TipoSensor.class, ticketContext.getTipoSensor().toString()),ticketContext.getNombreArea(),ticketContext.getDescripcion(),ticketContext.getIdSensor(),ticketContext.getURLs());
         }else{
             ticketPost=new Ticket(ticketContext.getTipo(),ticketContext.getTipoSensor(),ticketContext.getNombreArea(),ticketContext.getDescripcion(),ticketContext.getIdSensor(),ticketContext.getURLs());
         }

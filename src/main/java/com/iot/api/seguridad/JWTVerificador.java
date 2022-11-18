@@ -50,9 +50,9 @@ public class JWTVerificador {
         Map<String, Object> map = new HashMap<String, Object>();
 
         if(rol.equals("DIRECTIVO")){
-            map.put("Alta sensor",false);
-            map.put("Modif. sensor",false);
-            map.put("Baja sensor",false);
+            map.put("Alta sensor",true);
+            map.put("Modif. sensor",true);
+            map.put("Baja sensor",true);
             map.put("Ver tabla solicitudes",true);
             map.put("Alta sugerencia",true);
             map.put("Baja sugerencia",false);
