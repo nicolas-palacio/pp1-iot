@@ -57,7 +57,7 @@ public class Ticket {
     //@JsonIgnore
     @ManyToOne
     @JoinColumn(name="usuario_id", nullable=true)
-    @JsonBackReference
+    @JsonManagedReference
     Usuario appUsuario;
 
 

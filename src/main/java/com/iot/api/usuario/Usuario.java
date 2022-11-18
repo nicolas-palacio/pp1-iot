@@ -26,9 +26,11 @@ public class Usuario {
     @SequenceGenerator(name = "user_sequence",sequenceName = "user_sequence", allocationSize = 1)
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_registered_sequence")
+    @JsonIgnore
     private Long id;
     private String nombre;
     private String email;
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -41,7 +43,7 @@ public class Usuario {
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "ticket_id"))*/
 
-    @JsonManagedReference
+    @JsonBackReference
     List<Ticket> solicitudes;
 
 
