@@ -55,7 +55,7 @@ public class JWTVerificador {
             map.put("Baja sensor",true);
             map.put("Ver tabla solicitudes",true);
             map.put("Alta sugerencia",true);
-            map.put("Baja sugerencia",false);
+            map.put("Baja sugerencia",true);
         }
 
         if(rol.equals("TECNICO")){
