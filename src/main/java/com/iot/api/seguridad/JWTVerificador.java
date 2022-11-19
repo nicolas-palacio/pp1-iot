@@ -56,15 +56,19 @@ public class JWTVerificador {
             map.put("Ver tabla solicitudes",true);
             map.put("Alta sugerencia",true);
             map.put("Baja sugerencia",true);
+            map.put("Aprobar o rechazar ABM",false);
+            map.put("Aprobar o rechazar Sugerencias",true);
         }
 
         if(rol.equals("TECNICO")){
-            map.put("Alta sensor",true);
-            map.put("Modif. sensor",true);
-            map.put("Baja sensor",true);
+            map.put("Alta sensor",false);
+            map.put("Modif. sensor",false);
+            map.put("Baja sensor",false);
             map.put("Ver tabla solicitudes",true);
             map.put("Alta sugerencia",true);
             map.put("Baja sugerencia",true);
+            map.put("Aprobar o rechazar ABM",true);
+            map.put("Aprobar o rechazar Sugerencias",false);
         }
 
         if(rol.equals("ALUMNO_ULTIMO_ANIO")){
@@ -74,6 +78,8 @@ public class JWTVerificador {
             map.put("Ver tabla solicitudes",true);
             map.put("Alta sugerencia",true);
             map.put("Baja sugerencia",false);
+            map.put("Aprobar o rechazar ABM",false);
+            map.put("Aprobar o rechazar Sugerencias",false);
         }
 
         if(rol.equals("ADMIN")){
@@ -83,6 +89,8 @@ public class JWTVerificador {
             map.put("Ver tabla solicitudes",true);
             map.put("Alta sugerencia",true);
             map.put("Baja sugerencia",true);
+            map.put("Aprobar o rechazar ABM",false);
+            map.put("Aprobar o rechazar Sugerencias",true);
         }
 
         return map;

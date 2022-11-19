@@ -40,6 +40,11 @@ public class TicketServiceImpl implements  TicketService{
     }
 
     @Override
+    public List<Ticket> getTicketsAprobados() {
+        return ticketRepository.getTicketsAprobadas();
+    }
+
+    @Override
     public Ticket postTicket(Ticket ticket,String usuarioEmail) throws MessagingException {
         Usuario usuario=usuarioRepository.findByEmail(usuarioEmail);
         ticket.setAppUsuario(usuario);

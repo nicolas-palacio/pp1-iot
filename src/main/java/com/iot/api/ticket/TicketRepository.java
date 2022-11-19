@@ -26,4 +26,7 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
     @Query("SELECT t from Ticket t where t.appUsuario.email=?1")
     List<Ticket> getTicketsDeUsuario(String email);
 
+    @Query("SELECT t from Ticket t where t.estado='APROBADA'")
+    List<Ticket> getTicketsAprobadas();
+
 }

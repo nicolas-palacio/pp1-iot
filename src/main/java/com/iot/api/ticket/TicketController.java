@@ -30,9 +30,16 @@ public class TicketController {
     private JWTVerificador jwtVerificador;
 
     @Operation(summary = "Devuelve una lista con todas las solicitudes.",tags = {"Solicitudes"},security = {@SecurityRequirement(name="BearerJWT")})
-    @GetMapping
+    @GetMapping("/aprobados")
     @ResponseBody
     public List<Ticket> getTickets(){
+        return ticketService.getTicketsAprobados();
+    }
+
+    @Operation(summary = "Devuelve una lista con todas las solicitudes aprobadas.",tags = {"Solicitudes"},security = {@SecurityRequirement(name="BearerJWT")})
+    @GetMapping
+    @ResponseBody
+    public List<Ticket> getTicketsAprobados(){
         return ticketService.getTodosLosTickets();
     }
 

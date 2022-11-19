@@ -11,6 +11,8 @@ public interface TicketService {
 
     Optional<Ticket> getTicket(Long id);
 
+    List<Ticket> getTicketsAprobados();
+
     Ticket postTicket(Ticket ticket,String usuarioEmail) throws MessagingException;
 
     Ticket desaprobarTicket(Long id);
