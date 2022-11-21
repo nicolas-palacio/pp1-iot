@@ -20,6 +20,9 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.List;
 
+
+//@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
+
 @RestController
 @RequestMapping(path = "api/tickets")
 @AllArgsConstructor
@@ -71,8 +74,10 @@ public class TicketController {
         return new ResponseEntity<Ticket>(ticketPost, HttpStatus.CREATED);
     }
 
+    //@CrossOrigin(origins = {"*"}, allowedHeaders = {"*"},allowCredentials = "false",maxAge = 4800)
+
     @Operation(summary = "Aprueba la solicitud,segun el ID indicado.",tags = {"Solicitudes"},security = {@SecurityRequirement(name="BearerJWT")})
-    @PutMapping("/aprobar/{id}")
+    @PostMapping("/aprobar/{id}")
     public ResponseEntity<Ticket> aprobarTicket(@RequestHeader("Authorization") String authHeader, @PathVariable(name = "id") Long id){
         if(id==null){
             throw new BadRequestException("ID solicitud.");
@@ -89,7 +94,7 @@ public class TicketController {
     }
 
     @Operation(summary = "Desaprueba la solicitud,segun el ID indicado.",tags = {"Solicitudes"},security = {@SecurityRequirement(name="BearerJWT")})
-    @PutMapping("/desaprobar/{id}")
+    @PostMapping("/desaprobar/{id}")
     public ResponseEntity<Ticket> cerrarTicket(@RequestHeader("Authorization") String authHeader, @PathVariable(name = "id") Long id){
         if(id==null){
             throw new BadRequestException("ID solicitud.");

@@ -16,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -28,13 +30,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UsuarioServiceImpl usuarioServiceImpl;
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-
+        //http.cors().disable();
         CustomAuthenticationFilter customAuthenticationFilter= new CustomAuthenticationFilter(authenticationManagerBean());
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
-
 
 
         http.csrf().disable();
@@ -42,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers( "/api/login/**").permitAll();
         http.authorizeRequests().antMatchers( GET,"/api/sensores/**","/api/areas/**","/api/registros/**","/api/ticket/**").permitAll();
         http.authorizeRequests().antMatchers(POST,"/api/sensores/**","/api/areas/**","/api/registros/**").hasAnyAuthority("ADMIN","TECNICO","DIRECTIVO","DIRECTOR");
-        http.authorizeRequests().antMatchers(PUT,"/api/sensores/**","/api/areas/**","/api/registros/**","/api/tickets/**").hasAnyAuthority("ADMIN","TECNICO","DIRECTIVO","DIRECTOR");
+        http.authorizeRequests().antMatchers(PUT,"/api/**").hasAnyAuthority("ADMIN","TECNICO","DIRECTIVO","DIRECTOR");
         http.authorizeRequests().antMatchers(POST,"/api/**").hasAnyAuthority("ADMIN","TECNICO","DIRECTIVO","DIRECTOR","ALUMNO_ULTIMO_ANIO");
         http.authorizeRequests().antMatchers(DELETE,"/api/**").hasAnyAuthority("ADMIN","TECNICO","DIRECTIVO","DIRECTOR");
         http.addFilter(customAuthenticationFilter);
