@@ -50,47 +50,71 @@ public class JWTVerificador {
         Map<String, Object> map = new HashMap<String, Object>();
 
         if(rol.equals("DIRECTIVO")){
-            map.put("Alta sensor",true);
-            map.put("Modif. sensor",true);
-            map.put("Baja sensor",true);
-            map.put("Ver tabla solicitudes",true);
-            map.put("Alta sugerencia",true);
-            map.put("Baja sugerencia",true);
-            map.put("Aprobar o rechazar ABM",false);
-            map.put("Aprobar o rechazar Sugerencias",true);
+            map.put("TABLA_SUGERENCIAS_RECHAZADAS ",true);
+            map.put("TABLA_SUGERENCIAS_ACEPTADAS",true);
+            map.put("TABLA_SUGERENCIAS_PENDIENTES",true);
+            map.put("TABLA_SOLICITUDES_RECHAZADAS",true);
+            map.put("TABLA_SOLICITUDES_ACEPTADAS",true);
+            map.put("TABLA_SOLICITUDES_PENDIENTES",true);
+            map.put("BOTON_ALTA_SUGERENCIA",true);
+            map.put("BOTON_RECHAZO_SUGERENCIA",true);
+            map.put("BOTON_ACEPTA_SUGERENCIA",true);
+            map.put("BOTON_ACEPTA_SOLICITUD_SENSOR",false);
+            map.put("BOTON_RECHAZA_SOLICITUD_SENSOR",false);
+            map.put("BOTON_ALTA_SENSOR",true);
+            map.put("BOTON_MODIFICACION_SENSOR",true);
+            map.put("BOTON_BAJA_SENSOR",true);
         }
 
         if(rol.equals("TECNICO")){
-            map.put("Alta sensor",false);
-            map.put("Modif. sensor",false);
-            map.put("Baja sensor",false);
-            map.put("Ver tabla solicitudes",true);
-            map.put("Alta sugerencia",true);
-            map.put("Baja sugerencia",true);
-            map.put("Aprobar o rechazar ABM",true);
-            map.put("Aprobar o rechazar Sugerencias",false);
+            map.put("TABLA_SUGERENCIAS_RECHAZADAS ",true);
+            map.put("TABLA_SUGERENCIAS_ACEPTADAS",true);
+            map.put("TABLA_SUGERENCIAS_PENDIENTES",true);
+            map.put("TABLA_SOLICITUDES_RECHAZADAS",true);
+            map.put("TABLA_SOLICITUDES_ACEPTADAS",true);
+            map.put("TABLA_SOLICITUDES_PENDIENTES",true);
+            map.put("BOTON_ALTA_SUGERENCIA",false);
+            map.put("BOTON_RECHAZO_SUGERENCIA",false);
+            map.put("BOTON_ACEPTA_SUGERENCIA",false);
+            map.put("BOTON_ACEPTA_SOLICITUD_SENSOR",true);
+            map.put("BOTON_RECHAZA_SOLICITUD_SENSOR",true);
+            map.put("BOTON_ALTA_SENSOR",false);
+            map.put("BOTON_MODIFICACION_SENSOR",false);
+            map.put("BOTON_BAJA_SENSOR",false);
         }
 
         if(rol.equals("ALUMNO_ULTIMO_ANIO")){
-            map.put("Alta sensor",false);
-            map.put("Modif. sensor",false);
-            map.put("Baja sensor",false);
-            map.put("Ver tabla solicitudes",true);
-            map.put("Alta sugerencia",true);
-            map.put("Baja sugerencia",false);
-            map.put("Aprobar o rechazar ABM",false);
-            map.put("Aprobar o rechazar Sugerencias",false);
+            map.put("TABLA_SUGERENCIAS_RECHAZADAS ",false);
+            map.put("TABLA_SUGERENCIAS_ACEPTADAS",true);
+            map.put("TABLA_SUGERENCIAS_PENDIENTES",true);
+            map.put("TABLA_SOLICITUDES_RECHAZADAS",true);
+            map.put("TABLA_SOLICITUDES_ACEPTADAS",true);
+            map.put("TABLA_SOLICITUDES_PENDIENTES",true);
+            map.put("BOTON_ALTA_SUGERENCIA",true);
+            map.put("BOTON_RECHAZO_SUGERENCIA",false);
+            map.put("BOTON_ACEPTA_SUGERENCIA",false);
+            map.put("BOTON_ACEPTA_SOLICITUD_SENSOR",false);
+            map.put("BOTON_RECHAZA_SOLICITUD_SENSOR",false);
+            map.put("BOTON_ALTA_SENSOR",false);
+            map.put("BOTON_MODIFICACION_SENSOR",false);
+            map.put("BOTON_BAJA_SENSOR",false);
         }
 
         if(rol.equals("ADMIN")){
-            map.put("Alta sensor",true);
-            map.put("Modif. sensor",true);
-            map.put("Baja sensor",true);
-            map.put("Ver tabla solicitudes",true);
-            map.put("Alta sugerencia",true);
-            map.put("Baja sugerencia",true);
-            map.put("Aprobar o rechazar ABM",false);
-            map.put("Aprobar o rechazar Sugerencias",true);
+            map.put("TABLA_SUGERENCIAS_RECHAZADAS ",true);
+            map.put("TABLA_SUGERENCIAS_ACEPTADAS",true);
+            map.put("TABLA_SUGERENCIAS_PENDIENTES",true);
+            map.put("TABLA_SOLICITUDES_RECHAZADAS",true);
+            map.put("TABLA_SOLICITUDES_ACEPTADAS",true);
+            map.put("TABLA_SOLICITUDES_PENDIENTES",true);
+            map.put("BOTON_ALTA_SUGERENCIA",true);
+            map.put("BOTON_RECHAZO_SUGERENCIA",true);
+            map.put("BOTON_ACEPTA_SUGERENCIA",true);
+            map.put("BOTON_ACEPTA_SOLICITUD_SENSOR",false);
+            map.put("BOTON_RECHAZA_SOLICITUD_SENSOR",false);
+            map.put("BOTON_ALTA_SENSOR",true);
+            map.put("BOTON_MODIFICACION_SENSOR",true);
+            map.put("BOTON_BAJA_SENSOR",true);
         }
 
         return map;
