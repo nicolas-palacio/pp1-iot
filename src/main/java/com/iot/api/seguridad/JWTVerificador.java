@@ -53,9 +53,11 @@ public class JWTVerificador {
             map.put("TABLA_SUGERENCIAS_RECHAZADAS ",true);
             map.put("TABLA_SUGERENCIAS_ACEPTADAS",true);
             map.put("TABLA_SUGERENCIAS_PENDIENTES",true);
+            map.put("TABLA_SUGERENCIAS_CERRADAS",true);
             map.put("TABLA_SOLICITUDES_RECHAZADAS",true);
             map.put("TABLA_SOLICITUDES_ACEPTADAS",true);
             map.put("TABLA_SOLICITUDES_PENDIENTES",true);
+            map.put("TABLA_SOLICITUDES_CERRADAS",true);
             map.put("BOTON_ALTA_SUGERENCIA",true);
             map.put("BOTON_RECHAZO_SUGERENCIA",true);
             map.put("BOTON_ACEPTA_SUGERENCIA",true);
@@ -70,9 +72,11 @@ public class JWTVerificador {
             map.put("TABLA_SUGERENCIAS_RECHAZADAS ",true);
             map.put("TABLA_SUGERENCIAS_ACEPTADAS",true);
             map.put("TABLA_SUGERENCIAS_PENDIENTES",true);
+            map.put("TABLA_SUGERENCIAS_CERRADAS",true);
             map.put("TABLA_SOLICITUDES_RECHAZADAS",true);
             map.put("TABLA_SOLICITUDES_ACEPTADAS",true);
             map.put("TABLA_SOLICITUDES_PENDIENTES",true);
+            map.put("TABLA_SOLICITUDES_CERRADAS",true);
             map.put("BOTON_ALTA_SUGERENCIA",false);
             map.put("BOTON_RECHAZO_SUGERENCIA",false);
             map.put("BOTON_ACEPTA_SUGERENCIA",false);
@@ -87,9 +91,11 @@ public class JWTVerificador {
             map.put("TABLA_SUGERENCIAS_RECHAZADAS ",false);
             map.put("TABLA_SUGERENCIAS_ACEPTADAS",true);
             map.put("TABLA_SUGERENCIAS_PENDIENTES",true);
+            map.put("TABLA_SUGERENCIAS_CERRADAS",true);
             map.put("TABLA_SOLICITUDES_RECHAZADAS",true);
             map.put("TABLA_SOLICITUDES_ACEPTADAS",true);
             map.put("TABLA_SOLICITUDES_PENDIENTES",true);
+            map.put("TABLA_SOLICITUDES_CERRADAS",true);
             map.put("BOTON_ALTA_SUGERENCIA",true);
             map.put("BOTON_RECHAZO_SUGERENCIA",false);
             map.put("BOTON_ACEPTA_SUGERENCIA",false);
@@ -104,9 +110,11 @@ public class JWTVerificador {
             map.put("TABLA_SUGERENCIAS_RECHAZADAS ",true);
             map.put("TABLA_SUGERENCIAS_ACEPTADAS",true);
             map.put("TABLA_SUGERENCIAS_PENDIENTES",true);
+            map.put("TABLA_SUGERENCIAS_CERRADAS",true);
             map.put("TABLA_SOLICITUDES_RECHAZADAS",true);
             map.put("TABLA_SOLICITUDES_ACEPTADAS",true);
             map.put("TABLA_SOLICITUDES_PENDIENTES",true);
+            map.put("TABLA_SOLICITUDES_CERRADAS",true);
             map.put("BOTON_ALTA_SUGERENCIA",true);
             map.put("BOTON_RECHAZO_SUGERENCIA",true);
             map.put("BOTON_ACEPTA_SUGERENCIA",true);
