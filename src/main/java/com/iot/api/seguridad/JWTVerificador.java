@@ -50,7 +50,7 @@ public class JWTVerificador {
         Map<String, Object> map = new HashMap<String, Object>();
 
         if(rol.equals("DIRECTIVO")){
-            map.put("TABLA_SUGERENCIAS_RECHAZADAS ",true);
+            map.put("TABLA_SUGERENCIAS_RECHAZADAS",true);
             map.put("TABLA_SUGERENCIAS_ACEPTADAS",true);
             map.put("TABLA_SUGERENCIAS_PENDIENTES",true);
             map.put("TABLA_SUGERENCIAS_CERRADAS",true);
@@ -69,7 +69,7 @@ public class JWTVerificador {
         }
 
         if(rol.equals("TECNICO")){
-            map.put("TABLA_SUGERENCIAS_RECHAZADAS ",true);
+            map.put("TABLA_SUGERENCIAS_RECHAZADAS",true);
             map.put("TABLA_SUGERENCIAS_ACEPTADAS",true);
             map.put("TABLA_SUGERENCIAS_PENDIENTES",true);
             map.put("TABLA_SUGERENCIAS_CERRADAS",true);
@@ -88,7 +88,7 @@ public class JWTVerificador {
         }
 
         if(rol.equals("ALUMNO_ULTIMO_ANIO")){
-            map.put("TABLA_SUGERENCIAS_RECHAZADAS ",false);
+            map.put("TABLA_SUGERENCIAS_RECHAZADAS",false);
             map.put("TABLA_SUGERENCIAS_ACEPTADAS",true);
             map.put("TABLA_SUGERENCIAS_PENDIENTES",true);
             map.put("TABLA_SUGERENCIAS_CERRADAS",true);
@@ -107,7 +107,7 @@ public class JWTVerificador {
         }
 
         if(rol.equals("ADMIN")){
-            map.put("TABLA_SUGERENCIAS_RECHAZADAS ",true);
+            map.put("TABLA_SUGERENCIAS_RECHAZADAS",true);
             map.put("TABLA_SUGERENCIAS_ACEPTADAS",true);
             map.put("TABLA_SUGERENCIAS_PENDIENTES",true);
             map.put("TABLA_SUGERENCIAS_CERRADAS",true);
