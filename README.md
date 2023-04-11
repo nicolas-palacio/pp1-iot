@@ -1,5 +1,12 @@
 
-# IOTeam 
+<div align="center">
+  <img src="https://i.ibb.co/XV6SRnj/logo-IOT.png" alt="logo" width="200" height="auto" />
+  <h1>IOTeam</h1>
+  
+  <p>
+    An awesome README template for your projects! 
+  </p>
+</div> 
 
 ## Acerca del proyecto
 
