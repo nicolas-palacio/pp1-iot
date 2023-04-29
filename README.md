@@ -40,6 +40,10 @@ Este proyecto consiste en la implementación de una API REST para persistir y di
     - [x] Realizar solicitudes de ABM de sensores.
     - [x] Gestionar las solicites de ABM de sensores.
 
+## Modelo físico de la base de datos
+
+<img src="https://i.ibb.co/5WTK8h5/bd-diagram.jpg" alt="bd-diagram"/>
+
 ## Demo
 
 Se cuenta con un portal web en el que se puede visualizar las funcionalidades del proyecto.
