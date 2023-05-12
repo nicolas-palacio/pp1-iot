@@ -49,6 +49,7 @@ Este proyecto consiste en la implementación de una API REST para persistir y di
 Se cuenta con un portal web en el que se puede visualizar las funcionalidades del proyecto.
 
 - [Ingresar al portal como Directivo](https://portalsensores-iot.github.io/home/?usuario=prueba&email=pd@gmail.com&categoria=directivo&instituto=La%20Manzana%20de%20Isaac&ultimoanio=no&estecnico=no).
+- [Ingresar al portal como Tecnico](https://portalsensores-iot.github.io/home/?usuario=test&email=ejemplo@ejemplo.com&categoria=directivo&instituto=La%20Manzana%20de%20Isaac&ultimoanio=no&estecnico=si).
 
 ## Documentación del proyecto
 
